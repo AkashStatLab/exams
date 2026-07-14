@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Basic Application of Vocabulary</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:#eef2f7;
+
+padding:25px;
+
+}
+
+.container{
+
+max-width:1100px;
+
+margin:auto;
+
+background:white;
+
+padding:25px;
+
+border-radius:10px;
+
+box-shadow:0 0 12px rgba(0,0,0,.12);
+
+}
+
+h1{
+
+text-align:center;
+
+color:#0b5ed7;
+
+margin-bottom:15px;
+
+}
+
+h2{
+
+margin-bottom:15px;
+
+color:#333;
+
+}
+
+input{
+
+width:100%;
+
+padding:12px;
+
+margin-top:8px;
+
+margin-bottom:18px;
+
+font-size:16px;
+
+}
+
+button{
+
+padding:10px 20px;
+
+background:#0b5ed7;
+
+color:white;
+
+border:none;
+
+border-radius:5px;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+button:hover{
+
+background:#084298;
+
+}
+
+.page{
+
+display:none;
+
+}
+
+.active{
+
+display:block;
+
+}
+
+#topBar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:15px;
+
+background:#f4f6fa;
+
+border-radius:6px;
+
+margin-bottom:20px;
+
+}
+
+#questionBox{
+
+margin-top:20px;
+
+}
+
+.option{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+padding:12px;
+
+margin:10px 0;
+
+border:1px solid #d5d5d5;
+
+border-radius:6px;
+
+cursor:pointer;
+
+font-size:18px;
+
+transition:.2s;
+
+}
+
+.option:hover{
+
+background:#f3f8ff;
+
+}
+
+.option input{
+
+width:18px;
+
+height:18px;
+
+margin:0;
+
+flex-shrink:0;
+
+}
+
+.option span{
+
+flex:1;
+
+}
+
+#palette{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:8px;
+
+margin-top:25px;
+
+}
+
+.paletteBtn{
+
+padding:10px;
+
+border:none;
+
+background:#d6d6d6;
+
+border-radius:4px;
+
+cursor:pointer;
+
+}
+
+.current{
+
+background:#0b5ed7 !important;
+
+color:white;
+
+}
+
+.answered{
+
+background:#198754 !important;
+
+color:white;
+
+}
+
+#timer{
+
+font-weight:bold;
+
+font-size:20px;
+
+color:#d00000;
+
+}
+
+.resultBox{
+
+background:#f7f7f7;
+
+padding:15px;
+
+margin-top:20px;
+
+border-radius:8px;
+
+}
+
+.wrongQuestion{
+
+margin-top:20px;
+
+padding:12px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+}
+
+ul{
+
+padding-left:20px;
+
+line-height:1.8;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage" class="page active">
+
+<h1>Basic Application of Vocabulary</h1>
+
+<h2>Candidate Details</h2>
+
+<label>Name</label>
+
+<input type="text" id="candidateName">
+
+<label>Enrollment Number</label>
+
+<input type="text" id="candidateEnrollment">
+
+<h2>Instructions</h2>
+
+<ul>
+
+<li>Total Questions : 40</li>
+
+<li>Duration : 30 Minutes</li>
+
+<li>Marks : 40</li>
+
+<li>Each Question carries 1 mark.</li>
+
+<li>No Negative Marking.</li>
+
+<li>Do not refresh or close the browser during the examination.</li>
+
+<li>In the following questions choose the word which best expresses the meaning of the given word.</li>
+
+
+</ul>
+
+<br>
+
+<button id="startBtn">Start Test</button>
+
+</div>
+
+<!-- EXAM PAGE -->
+
+<div id="examPage" class="page">
+
+<div id="topBar">
+
+<div>
+
+<b>Name :</b>
+
+<span id="displayName"></span>
+
+<br>
+
+<b>Enrollment :</b>
+
+<span id="displayEnrollment"></span>
+
+</div>
+
+<div>
+
+Time Left
+
+<div id="timer">
+
+30:00
+
+</div>
+
+</div>
+
+</div>
+
+<h2 id="questionNumber"></h2>
+
+<div id="questionBox">
+
+</div>
+
+<div class="navigation">
+
+<button id="prevBtn">
+
+Previous
+
+</button>
+
+<button id="nextBtn">
+
+Next
+
+</button>
+
+<button id="submitBtn">
+
+Submit
+
+</button>
+
+</div>
+
+<div id="palette">
+
+</div>
+
+</div>
+
+<!-- RESULT PAGE -->
+
+<div id="resultPage" class="page">
+
+<h1>Test Result</h1>
+
+<div class="resultBox">
+
+<p>
+
+<b>Name :</b>
+
+<span id="resultName"></span>
+
+</p>
+
+<p>
+
+<b>Enrollment :</b>
+
+<span id="resultEnrollment"></span>
+
+</p>
+
+<hr><br>
+
+<p>
+
+Correct :
+
+<span id="correctCount"></span>
+
+</p>
+
+<p>
+
+Wrong :
+
+<span id="wrongCount"></span>
+
+</p>
+
+<p>
+
+Score :
+
+<span id="score"></span>
+
+</p>
+
+<p>
+
+Percentage :
+
+<span id="percentage"></span>
+
+</p>
+
+<p>
+
+Time Taken :
+
+<span id="timeTaken"></span>
+
+</p>
+
+</div>
+
+<h2 style="margin-top:30px;">
+
+Incorrectly Answered Questions
+
+</h2>
+
+<div id="wrongQuestions">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* JavaScript starts here.
+   DO NOT WRITE ANYTHING BELOW THIS COMMENT.
+   The next chunk will continue from here.
+*/
+
+/****************************************************
+ * CBT ENGINE v1.0
+ ****************************************************/
+
+const CONFIG = {
+    title: "Basic Application of Vocabulary",
+    durationMinutes: 30,
+    marksPerQuestion: 1
+};
+
+
+const QUESTIONS = [
+{
+question:"CORPULENT",
+options:["Lean","Gaunt","Emaciated","Obese"],
+answer:3
+},
+
+{
+question:"BRIEF",
+options:["Limited","Small","Little","Short"],
+answer:3
+},
+
+{
+question:"EMBEZZLE",
+options:["Misappropriate","Balance","Remunerate","Clear"],
+answer:0
+},
+
+{
+question:"VENT",
+options:["Opening","Stodge","End","Past tense of go"],
+answer:0
+},
+
+{
+question:"AUGUST",
+options:["Common","Ridiculous","Dignified","Petty"],
+answer:2
+},
+
+{
+question:"CANNY",
+options:["Obstinate","Handsome","Clever","Stout"],
+answer:2
+},
+
+{
+question:"ALERT",
+options:["Energetic","Observant","Intelligent","Watchful"],
+answer:3
+},
+
+{
+question:"DISTANT",
+options:["Far","Removed","Reserved","Separate"],
+answer:0
+},
+
+{
+question:"ADVERSITY",
+options:["Failure","Helplessness","Misfortune","Crisis"],
+answer:2
+},
+
+{
+question:"FAKE",
+options:["Original","Imitation","Trustworthy","Loyal"],
+answer:1
+},
+
+{
+question:"INDICT",
+options:["Condemn","Reprimand","Accuse","Allege"],
+answer:2
+},
+
+{
+question:"STRINGENT",
+options:["Dry","Strained","Rigorous","Shrill"],
+answer:2
+},
+
+{
+question:"LAMENT",
+options:["Complain","Comment","Condone","Console"],
+answer:0
+},
+
+{
+question:"HESITATED",
+options:["Stopped","Paused","Slowed","Postponed"],
+answer:1
+},
+
+{
+question:"FORAY",
+options:["Maraud","Contest","Ranger","Intuition"],
+answer:0
+},
+
+{
+question:"RECKLESS",
+options:["Courageous","Rash","Bold","Daring"],
+answer:1
+},
+
+{
+question:"INEBRIATE",
+options:["Dreamy","Stupefied","Unsteady","Drunken"],
+answer:3
+},
+
+{
+question:"STERILE",
+options:["Barren","Arid","Childless","Dry"],
+answer:0
+},
+
+{
+question:"MOVING",
+options:["Taking","Toying","Shifting","Turning"],
+answer:2
+},
+
+{
+question:"TIMID",
+options:["Fast","Slow","Medium","Shy"],
+answer:3
+},
+
+{
+question:"DIVERSION",
+options:["Amusement","Distortion","Deviation","Bylane"],
+answer:2
+},
+
+{
+question:"INEXPLICABLE",
+options:["Confusing","Unaccountable","Chaotic","Unconnected"],
+answer:1
+},
+
+{
+question:"FEEBLE",
+options:["Weak","Vain","Arrogant","Sick"],
+answer:0
+},
+
+{
+question:"BARE",
+options:["Uncovered","Tolerate","Clear","Neat"],
+answer:0
+},
+
+{
+question:"SALACITY",
+options:["Bliss","Depression","Indecency","Recession"],
+answer:2
+},
+
+{
+question:"ADMONISH",
+options:["Punish","Curse","Dismiss","Reprimand"],
+answer:3
+},
+
+{
+question:"DILIGENT",
+options:["Progressive","Brilliant","Inventive","Hard-working"],
+answer:3
+},
+
+{
+question:"PIOUS",
+options:["Pure","Pretentious","Clean","Devout"],
+answer:3
+},
+
+{
+question:"BROWSE",
+options:["Heal","Deceive","Examine","Strike"],
+answer:2
+},
+
+{
+question:"HARBINGER",
+options:["Messenger","Steward","Forerunner","Pilot"],
+answer:2
+},
+
+{
+question:"CANDID",
+options:["Apparent","Explicit","Frank","Bright"],
+answer:2
+},
+
+{
+question:"MELD",
+options:["To soothe","Merge","Purchase","Glisten"],
+answer:1
+},
+
+{
+question:"DESTITUTION",
+options:["Humility","Moderation","Poverty","Beggary"],
+answer:2
+},
+
+{
+question:"ZANY",
+options:["Clown","Pet","Thief","Magician"],
+answer:0
+},
+
+{
+question:"TACITURNITY",
+options:["Dumbness","Changeableness","Hesitation","Reserve"],
+answer:3
+},
+
+{
+question:"RABBLE",
+options:["Mob","Noise","Roar","Rubbish"],
+answer:0
+},
+
+{
+question:"MAYHEM",
+options:["Jubilation","Havoc","Excitement","Defeat"],
+answer:1
+},
+
+{
+question:"PONDER",
+options:["Think","Evaluate","Anticipate","Increase"],
+answer:0
+},
+
+{
+question:"SHIVER",
+options:["Feel","Rock","Tremble","Move"],
+answer:2
+},
+
+{
+question:"COMMENSURATE",
+options:["Measurable","Proportionate","Beginning","Appropriate"],
+answer:1
+}
+
+];
+
+/****************************************************
+ * GLOBAL VARIABLES
+ ****************************************************/
+
+let candidateName = "";
+let enrollmentNumber = "";
+
+let currentQuestion = 0;
+
+let answers = new Array(QUESTIONS.length).fill(-1);
+
+let remainingSeconds = CONFIG.durationMinutes * 60;
+
+let timerInterval = null;
+
+let examStarted = false;
+
+/****************************************************
+ * PAGE REFERENCES
+ ****************************************************/
+
+const loginPage = document.getElementById("loginPage");
+const examPage = document.getElementById("examPage");
+const resultPage = document.getElementById("resultPage");
+
+const candidateNameInput =
+document.getElementById("candidateName");
+
+const candidateEnrollmentInput =
+document.getElementById("candidateEnrollment");
+
+const displayName =
+document.getElementById("displayName");
+
+const displayEnrollment =
+document.getElementById("displayEnrollment");
+
+const timer =
+document.getElementById("timer");
+
+const questionNumber =
+document.getElementById("questionNumber");
+
+const questionBox =
+document.getElementById("questionBox");
+
+const palette =
+document.getElementById("palette");
+
+const resultName =
+document.getElementById("resultName");
+
+const resultEnrollment =
+document.getElementById("resultEnrollment");
+
+const correctCount =
+document.getElementById("correctCount");
+
+const wrongCount =
+document.getElementById("wrongCount");
+
+const score =
+document.getElementById("score");
+
+const percentage =
+document.getElementById("percentage");
+
+const timeTaken =
+document.getElementById("timeTaken");
+
+const wrongQuestions =
+document.getElementById("wrongQuestions");
+
+/****************************************************
+ * BUTTON REFERENCES
+ ****************************************************/
+
+document
+.getElementById("startBtn")
+.addEventListener("click", startExam);
+
+document
+.getElementById("nextBtn")
+.addEventListener("click", nextQuestion);
+
+document
+.getElementById("prevBtn")
+.addEventListener("click", previousQuestion);
+
+document
+.getElementById("submitBtn")
+.addEventListener("click", manualSubmit);
+
+/****************************************************
+ * START EXAM
+ ****************************************************/
+
+function startExam(){
+
+candidateName =
+candidateNameInput.value.trim();
+
+enrollmentNumber =
+candidateEnrollmentInput.value.trim();
+
+if(candidateName===""){
+
+alert("Please enter your Name.");
+
+return;
+
+}
+
+if(enrollmentNumber===""){
+
+alert("Please enter Enrollment Number.");
+
+return;
+
+}
+
+displayName.textContent =
+candidateName;
+
+displayEnrollment.textContent =
+enrollmentNumber;
+
+loginPage.classList.remove("active");
+
+examPage.classList.add("active");
+
+examStarted = true;
+
+buildPalette();
+
+loadQuestion();
+
+startTimer();
+
+}
+
+/****************************************************
+ * TIMER
+ ****************************************************/
+
+function startTimer(){
+
+updateTimerDisplay();
+
+timerInterval = setInterval(function(){
+
+remainingSeconds--;
+
+updateTimerDisplay();
+
+if(remainingSeconds<=0){
+
+clearInterval(timerInterval);
+
+submitExam(true);
+
+}
+
+},1000);
+
+}
+
+function updateTimerDisplay(){
+
+let minutes =
+Math.floor(remainingSeconds/60);
+
+let seconds =
+remainingSeconds%60;
+
+timer.textContent =
+String(minutes).padStart(2,"0")
++
+":"
++
+String(seconds).padStart(2,"0");
+
+}
+
+/****************************************************
+ * LOAD CURRENT QUESTION
+ ****************************************************/
+
+function loadQuestion(){
+
+const q=QUESTIONS[currentQuestion];
+
+questionNumber.innerHTML=
+
+"Question "
+
++
+
+(currentQuestion+1)
+
++
+
+" of "
+
++
+
+QUESTIONS.length;
+
+let html="<h3>"+q.question+"</h3>";
+
+for(let i=0;i<4;i++){
+
+const checked=
+
+answers[currentQuestion]===i
+
+?
+
+"checked"
+
+:
+
+"";
+
+html+=`
+
+<label class="option">
+
+<input
+
+type="radio"
+
+name="answer"
+
+value="${i}"
+
+${checked}
+
+onchange="saveAnswer(${i})">
+
+<span>
+
+<b>${String.fromCharCode(65+i)}.</b>
+
+${q.options[i]}
+
+</span>
+
+</label>
+
+`;
+
+}
+
+questionBox.innerHTML=html;
+
+updatePalette();
+
+}
+/****************************************************
+ * SAVE ANSWER
+ ****************************************************/
+
+function saveAnswer(option){
+
+answers[currentQuestion]=option;
+
+updatePalette();
+
+}
+
+function saveCurrentSelection(){
+
+const selected=
+
+document.querySelector(
+
+'input[name="answer"]:checked'
+
+);
+
+if(selected){
+
+answers[currentQuestion]=
+
+parseInt(selected.value);
+
+}
+
+}
+
+/****************************************************
+ * NEXT QUESTION
+ ****************************************************/
+
+function nextQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion<QUESTIONS.length-1){
+
+currentQuestion++;
+
+loadQuestion();
+
+}
+
+}
+
+/****************************************************
+ * PREVIOUS QUESTION
+ ****************************************************/
+
+function previousQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion>0){
+
+currentQuestion--;
+
+loadQuestion();
+
+}
+
+}
+/****************************************************
+ * BUILD QUESTION PALETTE
+ ****************************************************/
+
+function buildPalette(){
+
+palette.innerHTML="";
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const btn=document.createElement("button");
+
+btn.textContent=i+1;
+
+btn.className="paletteBtn";
+
+btn.onclick=function(){
+
+currentQuestion=i;
+
+loadQuestion();
+
+};
+
+palette.appendChild(btn);
+
+}
+
+updatePalette();
+
+}
+
+/****************************************************
+ * UPDATE PALETTE COLOURS
+ ****************************************************/
+
+function updatePalette(){
+
+const buttons =
+document.querySelectorAll(".paletteBtn");
+
+buttons.forEach(function(btn,index){
+
+btn.classList.remove("answered");
+
+btn.classList.remove("current");
+
+if(answers[index]!=-1){
+
+btn.classList.add("answered");
+
+}
+
+if(index===currentQuestion){
+
+btn.classList.add("current");
+
+}
+
+});
+
+}
+
+/****************************************************
+ * REFRESH / CLOSE WARNING
+ ****************************************************/
+
+window.addEventListener(
+
+"beforeunload",
+
+function(e){
+
+if(examStarted){
+
+e.preventDefault();
+
+e.returnValue="";
+
+}
+
+}
+
+);
+
+
+/****************************************************
+ * MANUAL SUBMIT
+ ****************************************************/
+
+function manualSubmit(){
+
+const unanswered =
+answers.filter(a => a === -1).length;
+
+let message =
+"Are you sure you want to submit the test?";
+
+if(unanswered>0){
+
+message =
+"You still have "
++
+unanswered
++
+" unanswered question(s).\n\nDo you still want to submit?";
+
+}
+
+if(confirm(message)){
+
+submitExam(false);
+
+}
+
+}
+
+/****************************************************
+ * SUBMIT EXAM
+ ****************************************************/
+
+function submitExam(timeUp){
+
+examStarted = false;
+
+clearInterval(timerInterval);
+
+examPage.classList.remove("active");
+
+resultPage.classList.add("active");
+
+calculateResult(timeUp);
+
+}
+
+/****************************************************
+ * CALCULATE RESULT
+ ****************************************************/
+
+function calculateResult(timeUp){
+
+let correct = 0;
+
+let wrong = 0;
+
+wrongQuestions.innerHTML = "";
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const q = QUESTIONS[i];
+
+if(answers[i]===q.answer){
+
+correct++;
+
+}else{
+
+wrong++;
+
+const div =
+document.createElement("div");
+
+div.className="wrongQuestion";
+
+let yourAnswer =
+"Not Answered";
+
+if(answers[i]!==-1){
+
+yourAnswer =
+String.fromCharCode(
+65 + answers[i]
+);
+
+}
+
+const correctAnswer =
+String.fromCharCode(
+65 + q.answer
+);
+
+div.innerHTML=
+
+"<b>Question "
++
+
+(i+1)
+
++
+
+"</b><br><br>"
+
++
+
+q.question
+
++
+
+"<br><br>"
+
++
+
+"<b>Your Answer :</b> "
+
++
+
+yourAnswer
+
++
+
+"<br>"
+
++
+
+"<b>Correct Answer :</b> "
+
++
+
+correctAnswer;
+
+wrongQuestions.appendChild(div);
+
+}
+
+}
+
+const total =
+QUESTIONS.length;
+
+const obtained =
+correct * CONFIG.marksPerQuestion;
+
+const percent =
+((obtained/(total*CONFIG.marksPerQuestion))*100)
+.toFixed(2);
+
+resultName.textContent =
+candidateName;
+
+resultEnrollment.textContent =
+enrollmentNumber;
+
+correctCount.textContent =
+correct;
+
+wrongCount.textContent =
+wrong;
+
+score.textContent =
+obtained
++
+" / "
++
+(total*CONFIG.marksPerQuestion);
+
+percentage.textContent =
+percent
++
+"%";
+
+const usedSeconds =
+(CONFIG.durationMinutes*60)
+-
+remainingSeconds;
+
+const usedMinutes =
+Math.floor(usedSeconds/60);
+
+const usedRemain =
+usedSeconds%60;
+
+timeTaken.textContent =
+usedMinutes
++
+" min "
++
+usedRemain
++
+" sec";
+
+if(timeUp){
+
+alert(
+"Time is over.\n\nYour test has been submitted automatically."
+);
+
+}
+
+}
+
+/****************************************************
+ * END OF CBT ENGINE
+ ****************************************************/
+
+</script>
+
+</body>
+
+</html>
