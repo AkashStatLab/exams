@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Adjectives and Determiners</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:#eef3f8;
+
+padding:25px;
+
+}
+
+.container{
+
+max-width:1100px;
+
+margin:auto;
+
+background:#fff;
+
+border-radius:10px;
+
+padding:25px;
+
+box-shadow:0 0 15px rgba(0,0,0,.12);
+
+}
+
+.page{
+
+display:none;
+
+}
+
+.active{
+
+display:block;
+
+}
+
+h1{
+
+text-align:center;
+
+color:#0d6efd;
+
+margin-bottom:15px;
+
+}
+
+h2{
+
+margin-bottom:15px;
+
+color:#333;
+
+}
+
+input{
+
+width:100%;
+
+padding:12px;
+
+margin-top:8px;
+
+margin-bottom:18px;
+
+font-size:16px;
+
+}
+
+button{
+
+padding:10px 18px;
+
+background:#0d6efd;
+
+color:white;
+
+border:none;
+
+border-radius:5px;
+
+cursor:pointer;
+
+font-size:15px;
+
+}
+
+button:hover{
+
+background:#084298;
+
+}
+
+ul{
+
+padding-left:20px;
+
+line-height:1.8;
+
+margin-bottom:20px;
+
+}
+
+#topBar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+background:#f5f7fb;
+
+padding:15px;
+
+border-radius:8px;
+
+margin-bottom:20px;
+
+}
+
+#candidateInfo{
+
+font-size:15px;
+
+line-height:1.8;
+
+}
+
+#timer{
+
+font-size:22px;
+
+font-weight:bold;
+
+color:#d60000;
+
+}
+
+#sectionTitle{
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#0d6efd;
+
+margin-bottom:10px;
+
+}
+
+#questionNumber{
+
+font-size:18px;
+
+font-weight:bold;
+
+margin-bottom:12px;
+
+}
+
+#questionBox{
+
+margin-top:20px;
+
+}
+
+.option{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:12px;
+
+margin:10px 0;
+
+border:1px solid #d8d8d8;
+
+border-radius:6px;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.option:hover{
+
+background:#eef6ff;
+
+}
+
+.option input{
+
+width:18px;
+
+height:18px;
+
+margin:0;
+
+}
+
+.option span{
+
+flex:1;
+
+}
+
+.navigation{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:25px;
+
+}
+
+#palette{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:8px;
+
+margin-top:25px;
+
+}
+
+.paletteBtn{
+
+padding:10px;
+
+border:none;
+
+background:#d6d6d6;
+
+border-radius:5px;
+
+cursor:pointer;
+
+}
+
+.current{
+
+background:#0d6efd !important;
+
+color:white;
+
+}
+
+.answered{
+
+background:#198754 !important;
+
+color:white;
+
+}
+
+.resultCard{
+
+background:#f8f8f8;
+
+padding:18px;
+
+border-radius:8px;
+
+margin-top:20px;
+
+line-height:2;
+
+}
+
+.reviewQuestion{
+
+margin-top:20px;
+
+padding:15px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+background:white;
+
+}
+
+.sectionHeading{
+
+margin-top:30px;
+
+padding:10px;
+
+background:#e9f2ff;
+
+font-weight:bold;
+
+border-left:5px solid #0d6efd;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+
+<div
+id="loginPage"
+class="page active">
+
+<h1>
+
+Adjectives and Determiners
+
+</h1>
+
+<h2>
+
+Candidate Details
+
+</h2>
+
+<label>
+
+Candidate Name
+
+</label>
+
+<input
+type="text"
+id="candidateName">
+
+<label>
+
+Enrollment Number
+
+</label>
+
+<input
+type="text"
+id="candidateEnrollment">
+
+<h2>
+
+Instructions
+
+</h2>
+
+<ul>
+
+<li>Total Questions : 35</li>
+
+<li>
+
+Duration :
+30 Minutes
+
+</li>
+
+<li>
+
+Each Question carries 1 Mark
+
+</li>
+
+<li>
+
+No Negative Marking
+
+</li>
+
+<li> Section A: The sentences given have three parts, indicated by (a), (b) and (c). Read each sentence to find out whether there is an error. If you find an error in any part [(a), (b) or (c)] of a sentence, indicate your response in the options appropriately. If a sentence has no error, indicate by choosing (d), which stands for ‘No error’. (Ignore the error of punctuation, if any) </li>
+<li> Section B: Fill in the blanks appropriately </li>
+
+
+<li>
+
+Do not refresh or close the browser during the examination.
+
+</li>
+
+</ul>
+
+<button
+id="startBtn">
+
+Start Test
+
+</button>
+
+</div>
+
+<!-- EXAM PAGE -->
+
+<div
+id="examPage"
+class="page">
+
+<div
+id="topBar">
+
+<div
+id="candidateInfo">
+
+<b>Name :</b>
+
+<span
+id="displayName"></span>
+
+<br>
+
+<b>Enrollment :</b>
+
+<span
+id="displayEnrollment"></span>
+
+</div>
+
+<div>
+
+Time Left
+
+<div
+id="timer">
+
+30:00
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="sectionTitle">
+
+</div>
+
+<div
+id="questionNumber">
+
+</div>
+
+<div
+id="questionBox">
+
+</div>
+
+<div
+class="navigation">
+
+<button
+id="prevBtn">
+
+Previous
+
+</button>
+
+<button
+id="nextBtn">
+
+Next
+
+</button>
+
+<button
+id="submitBtn">
+
+Submit Test
+
+</button>
+
+</div>
+
+<div
+id="palette">
+
+</div>
+
+</div>
+
+<!-- RESULT PAGE -->
+
+<div
+id="resultPage"
+class="page">
+
+<h1>
+
+Result
+
+</h1>
+
+<div
+class="resultCard">
+
+<p>
+
+<b>Name :</b>
+
+<span
+id="resultName"></span>
+
+</p>
+
+<p>
+
+<b>Enrollment :</b>
+
+<span
+id="resultEnrollment"></span>
+
+</p>
+
+<hr><br>
+
+<div
+id="sectionResults">
+
+</div>
+
+<hr><br>
+
+<p>
+
+Overall Score :
+
+<span
+id="overallScore"></span>
+
+</p>
+
+<p>
+
+Correct :
+
+<span
+id="overallCorrect"></span>
+
+</p>
+
+<p>
+
+Incorrect :
+
+<span
+id="overallWrong"></span>
+
+</p>
+
+<p>
+
+Percentage :
+
+<span
+id="overallPercentage"></span>
+
+</p>
+
+<p>
+
+Time Taken :
+
+<span
+id="timeTaken"></span>
+
+</p>
+
+</div>
+
+<h2
+style="margin-top:30px;">
+
+Incorrectly Answered Questions
+
+</h2>
+
+<div
+id="reviewArea">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/*************************************************
+
+CBT ENGINE v2.0
+
+Chunk 2 starts immediately below this line.
+
+*************************************************/
+/*************************************************
+CONFIGURATION
+*************************************************/
+
+const CONFIG = {
+
+title:"Adjectives and Determiners",
+
+durationMinutes:30,
+
+marksPerQuestion:1
+
+};
+
+/*************************************************
+SECTIONS
+
+(Leave empty for now.
+We'll insert questions later.)
+*************************************************/
+
+const SECTIONS = [
+
+{
+title:"Section A",
+questions:[
+
+{
+question:"There were (a) / no less than fifty persons (b) / present in the room (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"Few remarks (a) / that he made were (b) / offensive to my friend (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"It is a (a) / worth watching documentary (b) / and you must not miss it (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"Of all the students (a) / Rita was less worried (b) / when the date for the annual examination was announced (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"Even the most perfect person (a) / in the world is said to have erred (b) / when there was time to perform (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"The meeting was postponed (a) / because only a few number of persons (b) / were present there (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"In the opinion of everyone (a) / she is wiser (b) / than beautiful (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"The tiger is (a) / as swift as (b) / any animal (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"He had to cut a sorry figure (a) / when he realised that he had (b) / no any money in his purse (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"Of the three ministers (a) / which do you think (b) / is going to prove more successful (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"There is no greater pleasure (a) / than to spend one's (b) / whole day reading books (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:3
+},
+
+{
+question:"The patient became (a) / much worse than (b) / the doctor had expected (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:3
+},
+
+{
+question:"This is one of the (a) / most unique paintings (b) / ever displayed in the gallery (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"Each of the (a) / two brothers was (b) / given a prize (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"No other student (a) / in the class is (b) / so intelligent like Ravi (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"She is (a) / senior than (b) / all her colleagues (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"The climate of Kashmir (a) / is preferable (b) / than that of Rajasthan (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"He is (a) / the eldest (b) / among the two brothers (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"This book is (a) / superior than (b) / that one (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"I have never seen (a) / a more better player (b) / than him (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+}
+
+]
+},
+
+{
+title:"Section B",
+questions:[
+{
+question:"Very ---- people fly just because of terrorist activities.",
+options:[
+"little",
+"much",
+"many",
+"few"
+],
+answer:3
+},
+
+{
+question:"Johnny is a keen player but unfortunately he has ---- skills.",
+options:[
+"few",
+"none",
+"some",
+"little"
+],
+answer:0
+},
+
+{
+question:"If we don't move faster, we'll miss our transfer to Munich. There isn't ---- time to waste.",
+options:[
+"little",
+"any",
+"many",
+"few"
+],
+answer:1
+},
+
+{
+question:"Unfortunately, I haven't got ---- time for watching TV.",
+options:[
+"few",
+"no",
+"much",
+"little"
+],
+answer:2
+},
+
+{
+question:"You can buy these maps at ---- station. They all have them.",
+options:[
+"a lot of",
+"several",
+"some",
+"any"
+],
+answer:3
+},
+
+{
+question:"If you have ---- questions, I'm ready to answer.",
+options:[
+"little",
+"any",
+"much",
+"plenty"
+],
+answer:1
+},
+
+{
+question:"I didn't have ---- trouble getting the passports. I only had a problem with my photo because it was an old one.",
+options:[
+"much",
+"any",
+"no",
+"several"
+],
+answer:0
+},
+
+{
+question:"There is ---- water left, so drink only if you must.",
+options:[
+"some",
+"little",
+"few",
+"much"
+],
+answer:1
+},
+
+{
+question:"There isn't ---- point at all in getting upset about it.",
+options:[
+"few",
+"several",
+"any",
+"many"
+],
+answer:2
+},
+
+{
+question:"---- coat will do. It doesn't need to be a raincoat.",
+options:[
+"Little",
+"No",
+"Any",
+"Few"
+],
+answer:2
+},
+
+{
+question:"He is an expert on languages, but he knows ---- about mathematics.",
+options:[
+"few",
+"little",
+"a lot of",
+"several"
+],
+answer:1
+},
+
+{
+question:"I don't think there will be a severe shortage of usable water because there was ---- rainfall yesterday.",
+options:[
+"little",
+"few",
+"any",
+"a lot of"
+],
+answer:3
+},
+
+{
+question:"Unfortunately, I have ---- talent for music although I have always wanted to be a famous singer.",
+options:[
+"little",
+"few",
+"a few",
+"plenty of"
+],
+answer:0
+},
+
+{
+question:"There were ---- people at the meeting earlier but most of them left early so there aren't many left now.",
+options:[
+"little",
+"few",
+"much",
+"several"
+],
+answer:3
+},
+
+{
+question:"Although she thought she knew ---- of the subject, the teacher asked a few details she hardly remembered.",
+options:[
+"several",
+"much",
+"many",
+"any"
+],
+answer:1
+}
+
+]
+
+}
+
+];
+
+
+
+
+/*************************************************
+BUILD MASTER QUESTION LIST
+*************************************************/
+
+const QUESTIONS=[];
+
+SECTIONS.forEach(function(section){
+
+section.questions.forEach(function(q){
+
+QUESTIONS.push({
+
+section:section.title,
+
+question:q.question,
+
+options:q.options,
+
+answer:q.answer
+
+});
+
+});
+
+});
+
+/*************************************************
+GLOBAL VARIABLES
+*************************************************/
+
+let candidateName="";
+
+let enrollmentNumber="";
+
+let currentQuestion=0;
+
+let answers=[];
+
+let examStarted=false;
+
+let timerInterval=null;
+
+let remainingSeconds=
+CONFIG.durationMinutes*60;
+
+/*************************************************
+INITIALISE ANSWERS
+*************************************************/
+
+function initialiseAnswers(){
+
+answers=[];
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+answers.push(-1);
+
+}
+
+}
+
+/*************************************************
+PAGE REFERENCES
+*************************************************/
+
+const loginPage=
+document.getElementById("loginPage");
+
+const examPage=
+document.getElementById("examPage");
+
+const resultPage=
+document.getElementById("resultPage");
+
+const candidateNameInput=
+document.getElementById("candidateName");
+
+const candidateEnrollmentInput=
+document.getElementById("candidateEnrollment");
+
+const displayName=
+document.getElementById("displayName");
+
+const displayEnrollment=
+document.getElementById("displayEnrollment");
+
+const sectionTitle=
+document.getElementById("sectionTitle");
+
+const questionNumber=
+document.getElementById("questionNumber");
+
+const questionBox=
+document.getElementById("questionBox");
+
+const palette=
+document.getElementById("palette");
+
+const timer=
+document.getElementById("timer");
+
+const resultName=
+document.getElementById("resultName");
+
+const resultEnrollment=
+document.getElementById("resultEnrollment");
+
+const overallScore=
+document.getElementById("overallScore");
+
+const overallCorrect=
+document.getElementById("overallCorrect");
+
+const overallWrong=
+document.getElementById("overallWrong");
+
+const overallPercentage=
+document.getElementById("overallPercentage");
+
+const timeTaken=
+document.getElementById("timeTaken");
+
+const sectionResults=
+document.getElementById("sectionResults");
+
+const reviewArea=
+document.getElementById("reviewArea");
+
+/*************************************************
+BUTTONS
+*************************************************/
+
+document
+.getElementById("startBtn")
+.addEventListener("click",startExam);
+
+document
+.getElementById("nextBtn")
+.addEventListener("click",nextQuestion);
+
+document
+.getElementById("prevBtn")
+.addEventListener("click",previousQuestion);
+
+document
+.getElementById("submitBtn")
+.addEventListener("click",manualSubmit);
+
+/*************************************************
+START EXAM
+*************************************************/
+
+function startExam(){
+
+candidateName=
+candidateNameInput.value.trim();
+
+enrollmentNumber=
+candidateEnrollmentInput.value.trim();
+
+if(candidateName===""){
+
+alert("Please enter Candidate Name.");
+
+return;
+
+}
+
+if(enrollmentNumber===""){
+
+alert("Please enter Enrollment Number.");
+
+return;
+
+}
+
+displayName.textContent=
+candidateName;
+
+displayEnrollment.textContent=
+enrollmentNumber;
+
+initialiseAnswers();
+
+loginPage.classList.remove("active");
+
+examPage.classList.add("active");
+
+examStarted=true;
+
+buildPalette();
+
+loadQuestion();
+
+startTimer();
+
+}
+
+/*************************************************
+TIMER
+*************************************************/
+
+function startTimer(){
+
+updateTimer();
+
+timerInterval=setInterval(function(){
+
+remainingSeconds--;
+
+updateTimer();
+
+if(remainingSeconds<=0){
+
+clearInterval(timerInterval);
+
+submitExam(true);
+
+}
+
+},1000);
+
+}
+
+function updateTimer(){
+
+let min=
+Math.floor(remainingSeconds/60);
+
+let sec=
+remainingSeconds%60;
+
+timer.textContent=
+
+String(min).padStart(2,"0")
+
++
+
+":"
+
++
+
+String(sec).padStart(2,"0");
+
+}
+
+/*************************************************
+LOAD QUESTION
+*************************************************/
+
+function loadQuestion(){
+
+const q=QUESTIONS[currentQuestion];
+
+sectionTitle.textContent=q.section;
+
+questionNumber.textContent=
+
+"Question "
+
++
+
+(currentQuestion+1)
+
++
+
+" of "
+
++
+
+QUESTIONS.length;
+
+let html="<h3>"+q.question+"</h3>";
+
+for(let i=0;i<4;i++){
+
+const checked=
+
+answers[currentQuestion]===i
+
+?
+
+"checked"
+
+:
+
+"";
+
+html+=`
+
+<label class="option">
+
+<input
+type="radio"
+name="answer"
+value="${i}"
+${checked}
+onchange="saveAnswer(${i})">
+
+<span>
+
+<b>${String.fromCharCode(65+i)}.</b>
+
+${q.options[i]}
+
+</span>
+
+</label>
+
+`;
+
+}
+
+questionBox.innerHTML=html;
+
+updatePalette();
+
+}
+
+/*************************************************
+SAVE ANSWER
+*************************************************/
+
+function saveAnswer(option){
+
+answers[currentQuestion]=option;
+
+updatePalette();
+
+}
+
+/*************************************************
+SAVE CURRENT SELECTION
+*************************************************/
+
+function saveCurrentSelection(){
+
+const selected=
+
+document.querySelector(
+
+'input[name="answer"]:checked'
+
+);
+
+if(selected){
+
+answers[currentQuestion]=
+
+parseInt(selected.value);
+
+}
+
+}
+
+/*************************************************
+NEXT QUESTION
+*************************************************/
+
+function nextQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion<QUESTIONS.length-1){
+
+currentQuestion++;
+
+loadQuestion();
+
+}
+
+}
+
+/*************************************************
+PREVIOUS QUESTION
+*************************************************/
+
+function previousQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion>0){
+
+currentQuestion--;
+
+loadQuestion();
+
+}
+
+}
+
+/*************************************************
+QUESTION PALETTE
+*************************************************/
+
+function buildPalette(){
+
+palette.innerHTML="";
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const btn=document.createElement("button");
+
+btn.textContent=i+1;
+
+btn.className="paletteBtn";
+
+btn.onclick=function(){
+
+saveCurrentSelection();
+
+currentQuestion=i;
+
+loadQuestion();
+
+};
+
+palette.appendChild(btn);
+
+}
+
+updatePalette();
+
+}
+
+/*************************************************
+UPDATE PALETTE
+*************************************************/
+
+function updatePalette(){
+
+const buttons=
+
+document.querySelectorAll(".paletteBtn");
+
+buttons.forEach(function(btn,index){
+
+btn.classList.remove("current");
+
+btn.classList.remove("answered");
+
+if(index===currentQuestion){
+
+btn.classList.add("current");
+
+}
+
+if(answers[index]!==-1){
+
+btn.classList.add("answered");
+
+}
+
+});
+
+}
+
+/*************************************************
+REFRESH WARNING
+*************************************************/
+
+window.addEventListener(
+
+"beforeunload",
+
+function(e){
+
+if(examStarted){
+
+e.preventDefault();
+
+e.returnValue="";
+
+}
+
+}
+
+);
+
+/*************************************************
+MANUAL SUBMIT
+*************************************************/
+
+function manualSubmit(){
+
+saveCurrentSelection();
+
+let unanswered=0;
+
+answers.forEach(function(a){
+
+if(a===-1){
+
+unanswered++;
+
+}
+
+});
+
+let msg="Are you sure you want to submit the test?";
+
+if(unanswered>0){
+
+msg="You have "
+
++ unanswered +
+
+" unanswered question(s).\n\nDo you still want to submit?";
+
+}
+
+if(confirm(msg)){
+
+submitExam(false);
+
+}
+
+}
+
+/*************************************************
+SUBMIT EXAM
+*************************************************/
+
+function submitExam(timeUp){
+
+examStarted=false;
+
+clearInterval(timerInterval);
+
+window.onbeforeunload=null;
+
+examPage.classList.remove("active");
+
+resultPage.classList.add("active");
+
+calculateResult();
+
+if(timeUp){
+
+alert("Time is over.\n\nYour test has been submitted automatically.");
+
+}
+
+}
+
+/*************************************************
+CALCULATE RESULT
+*************************************************/
+
+function calculateResult(){
+
+resultName.textContent=candidateName;
+
+resultEnrollment.textContent=enrollmentNumber;
+
+sectionResults.innerHTML="";
+
+reviewArea.innerHTML="";
+
+let totalCorrect=0;
+
+let totalWrong=0;
+
+let currentSection="";
+
+SECTIONS.forEach(function(section){
+
+let correct=0;
+
+let wrong=0;
+
+let reviewHTML="";
+
+section.questions.forEach(function(q){
+
+const index=QUESTIONS.findIndex(function(item){
+
+return item.question===q.question;
+
+});
+
+if(index===-1)return;
+
+if(answers[index]===q.answer){
+
+correct++;
+
+}else{
+
+wrong++;
+
+const yourAnswer=
+
+answers[index]===-1
+
+?
+
+"Not Answered"
+
+:
+
+String.fromCharCode(65+answers[index]);
+
+const correctAnswer=
+
+String.fromCharCode(65+q.answer);
+
+reviewHTML+=`
+
+<div class="reviewQuestion">
+
+<b>Question ${index+1}</b>
+
+<br><br>
+
+${q.question}
+
+<br><br>
+
+<b>Your Answer :</b>
+
+${yourAnswer}
+
+<br>
+
+<b>Correct Answer :</b>
+
+${correctAnswer}
+
+</div>
+
+`;
+
+}
+
+});
+
+totalCorrect+=correct;
+
+totalWrong+=wrong;
+
+const card=document.createElement("div");
+
+card.className="resultCard";
+
+card.innerHTML=
+
+`<h3>${section.title}</h3>
+
+Correct : ${correct}
+
+<br>
+
+Incorrect : ${wrong}
+
+<br>
+
+Score : ${correct}/${section.questions.length}`;
+
+sectionResults.appendChild(card);
+
+if(reviewHTML!==""){
+
+const heading=document.createElement("div");
+
+heading.className="sectionHeading";
+
+heading.textContent=section.title;
+
+reviewArea.appendChild(heading);
+
+reviewArea.insertAdjacentHTML(
+
+"beforeend",
+
+reviewHTML
+
+);
+
+}
+
+});
+
+overallCorrect.textContent=totalCorrect;
+
+overallWrong.textContent=totalWrong;
+
+overallScore.textContent=
+
+totalCorrect
+
++
+
+" / "
+
++
+
+QUESTIONS.length;
+
+overallPercentage.textContent=
+
+((totalCorrect/QUESTIONS.length)*100)
+
+.toFixed(2)
+
++
+
+"%";
+
+const used=
+
+CONFIG.durationMinutes*60
+
+-
+
+remainingSeconds;
+
+const min=Math.floor(used/60);
+
+const sec=used%60;
+
+timeTaken.textContent=
+
+min
+
++
+
+" min "
+
++
+
+sec
+
++
+
+" sec";
+
+}
+
+/*************************************************
+END OF ENGINE
+*************************************************/
+
+</script>
+
+</body>
+
+</html>
