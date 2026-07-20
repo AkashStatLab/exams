@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Noun and Pronoun</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:#edf2f7;
+
+padding:20px;
+
+}
+
+.container{
+
+max-width:1350px;
+
+margin:auto;
+
+background:white;
+
+border-radius:10px;
+
+box-shadow:0 0 12px rgba(0,0,0,.15);
+
+padding:20px;
+
+}
+
+.page{
+
+display:none;
+
+}
+
+.page.active{
+
+display:block;
+
+}
+
+h1{
+
+text-align:center;
+
+color:#0d6efd;
+
+margin-bottom:18px;
+
+}
+
+h2{
+
+margin-bottom:15px;
+
+color:#333;
+
+}
+
+label{
+
+display:block;
+
+font-weight:bold;
+
+margin-top:12px;
+
+}
+
+input[type=text]{
+
+width:100%;
+
+padding:11px;
+
+font-size:16px;
+
+margin-top:5px;
+
+margin-bottom:12px;
+
+}
+
+button{
+
+background:#0d6efd;
+
+color:white;
+
+border:none;
+
+padding:10px 22px;
+
+font-size:15px;
+
+border-radius:5px;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#0a58ca;
+
+}
+
+.instructions{
+
+line-height:1.9;
+
+margin-top:10px;
+
+padding-left:18px;
+
+}
+
+.topBar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:15px;
+
+background:#eef5ff;
+
+border-radius:8px;
+
+margin-bottom:20px;
+
+}
+
+.examLayout{
+
+display:grid;
+
+grid-template-columns:4fr 1fr;
+
+gap:20px;
+
+}
+
+.leftPanel{
+
+padding-right:5px;
+
+}
+
+.rightPanel{
+
+background:#f8f9fa;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+padding:15px;
+
+height:fit-content;
+
+position:sticky;
+
+top:15px;
+
+}
+
+.sectionTitle{
+
+font-size:18px;
+
+font-weight:bold;
+
+color:#0d6efd;
+
+margin-bottom:12px;
+
+}
+
+#questionNumber{
+
+font-size:18px;
+
+font-weight:bold;
+
+margin-bottom:12px;
+
+}
+
+#questionText{
+
+font-size:20px;
+
+line-height:1.6;
+
+margin-bottom:18px;
+
+}
+
+.option{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+padding:9px 12px;
+
+border:1px solid #d8d8d8;
+
+border-radius:6px;
+
+margin-bottom:8px;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.option:hover{
+
+background:#eef6ff;
+
+}
+
+.option input{
+
+width:17px;
+
+height:17px;
+
+}
+
+.option span{
+
+font-size:15px;
+
+font-weight:400;
+
+}
+
+.option b{
+
+font-size:15px;
+
+font-weight:600;
+
+}
+
+.navigation{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:22px;
+
+}
+
+#palette{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:8px;
+
+margin-top:12px;
+
+}
+
+.paletteBtn{
+
+padding:10px;
+
+border:none;
+
+border-radius:5px;
+
+background:#d9d9d9;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+.paletteBtn.current{
+
+background:#0d6efd;
+
+color:white;
+
+}
+
+.paletteBtn.answered{
+
+background:#198754;
+
+color:white;
+
+}
+
+#timer{
+
+font-size:24px;
+
+font-weight:bold;
+
+color:#b00020;
+
+}
+
+.resultCard{
+
+background:#fafafa;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+padding:20px;
+
+line-height:2;
+
+margin-top:20px;
+
+}
+
+.review{
+
+margin-top:18px;
+
+padding:15px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+background:white;
+
+}
+
+hr{
+
+margin:18px 0;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+
+<div
+id="loginPage"
+class="page active">
+
+<h1>
+
+Noun and Pronoun
+
+</h1>
+
+<h2>
+
+Candidate Details
+
+</h2>
+
+<label>
+
+Candidate Name
+
+</label>
+
+<input
+type="text"
+id="candidateName">
+
+<label>
+
+Enrollment Number
+
+</label>
+
+<input
+type="text"
+id="candidateEnrollment">
+
+<h2>
+
+Instructions
+
+</h2>
+
+<ul class="instructions">
+
+<li>Total Questions : 40</li>
+
+<li>Section A : Nouns (20 Questions)</li>
+
+<li>Section B : Pronouns (20 Questions)</li>
+
+<li> In both sections, the sentences given have three parts, indicated by (a), (b) and (c). Read each sentence to find out whether there is an error. If you find an error in any part [(a), (b) or (c)] of a sentence, indicate your response in the options appropriately. If a sentence has no error, indicate by choosing (d), which stands for ‘No error’. (Ignore the error of punctuation, if any) </li>
+
+<li>Duration : 40 Minutes</li>
+
+<li>Each Question carries 1 Mark.</li>
+
+<li>No Negative Marking.</li>
+
+<li>Click Finish Test before leaving.</li>
+
+</ul>
+
+<br>
+
+<button
+id="startBtn">
+
+Start Test
+
+</button>
+
+</div>
+
+<!-- EXAM PAGE -->
+
+<div
+id="examPage"
+class="page">
+
+<div class="topBar">
+
+<div>
+
+<b>Name :</b>
+
+<span id="displayName"></span>
+
+<br>
+
+<b>Enrollment :</b>
+
+<span id="displayEnrollment"></span>
+
+</div>
+
+<div>
+
+Time Left
+
+<div id="timer">
+
+40:00
+
+</div>
+
+</div>
+
+</div>
+
+<div class="examLayout">
+
+<div class="leftPanel">
+
+<div
+id="sectionTitle"
+class="sectionTitle">
+
+</div>
+
+<div
+id="questionNumber">
+
+</div>
+
+<div
+id="questionText">
+
+</div>
+
+<div
+id="optionsBox">
+
+</div>
+
+<div class="navigation">
+
+<button
+id="prevBtn">
+
+Previous
+
+</button>
+
+<button
+id="nextBtn">
+
+Next
+
+</button>
+
+<button
+id="submitBtn">
+
+Finish Test
+
+</button>
+
+</div>
+
+</div>
+
+<div class="rightPanel">
+
+<h3>
+
+Question Palette
+
+</h3>
+
+<div
+id="palette">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RESULT PAGE -->
+
+<div
+id="resultPage"
+class="page">
+
+<h1>
+
+Test Result
+
+</h1>
+
+<div class="resultCard">
+
+<p>
+
+<b>Name :</b>
+
+<span id="resultName"></span>
+
+</p>
+
+<p>
+
+<b>Enrollment :</b>
+
+<span id="resultEnrollment"></span>
+
+</p>
+
+<hr>
+
+<p>
+
+Correct :
+
+<span id="correctCount"></span>
+
+</p>
+
+<p>
+
+Incorrect :
+
+<span id="wrongCount"></span>
+
+</p>
+
+<p>
+
+Score :
+
+<span id="score"></span>
+
+</p>
+
+<p>
+
+Percentage :
+
+<span id="percentage"></span>
+
+</p>
+
+<p>
+
+Time Taken :
+
+<span id="timeTaken"></span>
+
+</p>
+
+</div>
+
+<h2 style="margin-top:25px;">
+
+Incorrectly Answered Questions
+
+</h2>
+
+<div
+id="reviewArea">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/************************************************
+
+CBT ENGINE v4.0
+
+Chunk 2A starts here.
+
+************************************************/
+
+/************************************************
+CONFIGURATION
+************************************************/
+
+const CONFIG={
+
+title:"Noun and Pronouns",
+
+durationMinutes:40,
+
+marksPerQuestion:1
+
+};
+
+/************************************************
+SECTIONS
+
+(You'll paste the Noun and Pronoun questions
+here later.)
+
+************************************************/
+
+const SECTIONS=[
+
+{
+
+title:"Section A : Nouns",
+questions:[
+
+{
+question:"They have (a) / placed order (b) / for books. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"My brother-in-laws (a) / who live in Delhi (b) / have come to stay with us. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"The customer handed over (a) / a five hundred-rupees note (b) / to the shopkeeper. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"The flock of lions (a) / roamed about (b) / fearlessly in the jungle. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"I have done my best; (a) / the whole thing is now (b) / in the laps of the God. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"One of the most (a) / widely spread (b) / bad habit (c) / is the use of tobacco. (d) / No error (e)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"Recently I visited Ooty (a) / and found the sceneries (b) / to be marvellous. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"All the furnitures have been (a) / sent to the newly constructed house (b) / located in a village. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"The car could not (a) / ascend the steep hill (b) / because it was in the wrong gears. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"A trained gang of sailors (a) / was employed (b) / on the ship. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"The sound of (a) / a gun shot (b) / scattered the flock of birds. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"The Indian force (a) / drove away (b) / the Pakistanis. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"The polling was marred (a) / at many a place (b) / by attempts at riging. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"His mouth watered (a) / when he saw (b) / a bouquet of grapes. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"You can get (a) / all the informations you want (b) / in this library. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"This article (a) / is not available in (b) / any of the shop (c) / in the market. (d) / No error (e)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"The blinds (a) / deserve (b) / our sympathy. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"Students should not take part (a) / in party politics and political demonstrations (b) / as they interfere in serious study. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"Satyajit Ray, who conceived, co-authored (a) / and directed a number of good films, was (b) / one of India's most talented film maker. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"I saw (a) / a few children (b) / playing on sand. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+}
+
+]
+
+},
+
+{
+
+title:"Section B : Pronouns",
+
+questions:[
+
+{
+question:"He, you and I (a) / will manage (b) / this problem together (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"Last summer he went (a) / to his grand parent's village, (b) / and enjoyed very much. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"If I were him, (a) / I would have taught (b) / those cheats a lesson (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"As soon as he (a) / saw his mother (b) / he ran to her (c) / and embraced (d) / No error (e)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:3
+},
+
+{
+question:"Being a (a) / rainy day I (b) / remained indoors. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"The number of vehicles (a) / plying on this road (b) / is more than on the main road. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"Being a begger, (a) / I admitted him (b) / to an old people's home. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"This is the girl (a) / whom I think had won (b) / the gold medal in the Dance competition. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"Wherever they go, (a) / Indians easily adapt to (b) / local circumstances. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"Reema is (a) / taller (b) / than me. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"Inspite of the doctor's stern warning, (a) / he continued taking (b) / sugar in his coffee. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"Had I come (a) / to know about (b) / his difficulties (c) / I would have certainly helped. (d) / No error (e)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:3
+},
+
+{
+question:"One of them (a) / forget to take their bag (b) / from the school. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"Mr. Sunil Pawar, our representative, (a) / he will attend the meeting (b) / on our behalf. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:1
+},
+
+{
+question:"Being a destitute, (a) / I admitted him (b) / to an old peoples home. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"It is not difficult to believe that a man (a) / who has lived in this city for a long time (b) / he will never feel at home anywhere else in the world. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"Each girl was (a) / given a bunch of flowers, (b) / which pleased her very much. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"The party chief made it a point to state that (a) / the Prime Minister and the Union Home Minister should also come (b) / and they see what his party men had seen. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+},
+
+{
+question:"I going there (a) / will not solve (b) / this complicated problem. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:0
+},
+
+{
+question:"The district superintendent of police has announced that those who are found guilty of breach of peace (a) / or of taking the law into their own hands (b) / they will be taken to task. (c) / No error (d)",
+options:[
+"Part (a)",
+"Part (b)",
+"Part (c)",
+"No Error"
+],
+answer:2
+}
+
+]
+
+}
+
+];
+
+/************************************************
+FLATTEN QUESTIONS
+
+DO NOT CHANGE THIS
+
+************************************************/
+
+const QUESTIONS=[];
+
+SECTIONS.forEach(function(section){
+
+section.questions.forEach(function(q){
+
+QUESTIONS.push({
+
+section:section.title,
+
+question:q.question,
+
+options:q.options,
+
+answer:q.answer
+
+});
+
+});
+
+});
+
+/************************************************
+GLOBAL VARIABLES
+************************************************/
+
+let candidateName="";
+
+let enrollmentNumber="";
+
+let currentQuestion=0;
+
+let answers=[];
+
+let examStarted=false;
+
+let timerInterval=null;
+
+let remainingSeconds=
+
+CONFIG.durationMinutes*60;
+
+/************************************************
+INITIALISE ANSWERS
+************************************************/
+
+function initialiseAnswers(){
+
+answers=[];
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+answers.push(-1);
+
+}
+
+}
+
+/************************************************
+PAGE REFERENCES
+************************************************/
+
+const loginPage=
+
+document.getElementById("loginPage");
+
+const examPage=
+
+document.getElementById("examPage");
+
+const resultPage=
+
+document.getElementById("resultPage");
+
+const candidateNameInput=
+
+document.getElementById("candidateName");
+
+const candidateEnrollmentInput=
+
+document.getElementById("candidateEnrollment");
+
+const displayName=
+
+document.getElementById("displayName");
+
+const displayEnrollment=
+
+document.getElementById("displayEnrollment");
+
+const sectionTitle=
+
+document.getElementById("sectionTitle");
+
+const questionNumber=
+
+document.getElementById("questionNumber");
+
+const questionText=
+
+document.getElementById("questionText");
+
+const optionsBox=
+
+document.getElementById("optionsBox");
+
+const palette=
+
+document.getElementById("palette");
+
+const timer=
+
+document.getElementById("timer");
+
+const resultName=
+
+document.getElementById("resultName");
+
+const resultEnrollment=
+
+document.getElementById("resultEnrollment");
+
+const correctCount=
+
+document.getElementById("correctCount");
+
+const wrongCount=
+
+document.getElementById("wrongCount");
+
+const score=
+
+document.getElementById("score");
+
+const percentage=
+
+document.getElementById("percentage");
+
+const timeTaken=
+
+document.getElementById("timeTaken");
+
+const reviewArea=
+
+document.getElementById("reviewArea");
+
+/************************************************
+BUTTON EVENTS
+************************************************/
+
+document
+
+.getElementById("startBtn")
+
+.addEventListener("click",startExam);
+
+document
+
+.getElementById("prevBtn")
+
+.addEventListener("click",previousQuestion);
+
+document
+
+.getElementById("nextBtn")
+
+.addEventListener("click",nextQuestion);
+
+document
+
+.getElementById("submitBtn")
+
+.addEventListener("click",manualSubmit);
+
+/************************************************
+START EXAM
+************************************************/
+
+function startExam(){
+
+candidateName=
+
+candidateNameInput.value.trim();
+
+enrollmentNumber=
+
+candidateEnrollmentInput.value.trim();
+
+if(candidateName===""){
+
+alert("Please enter Candidate Name.");
+
+return;
+
+}
+
+if(enrollmentNumber===""){
+
+alert("Please enter Enrollment Number.");
+
+return;
+
+}
+
+displayName.textContent=
+
+candidateName;
+
+displayEnrollment.textContent=
+
+enrollmentNumber;
+
+initialiseAnswers();
+
+loginPage.classList.remove("active");
+
+examPage.classList.add("active");
+
+examStarted=true;
+
+buildPalette();
+
+loadQuestion();
+
+startTimer();
+
+}
+
+/************************************************
+TIMER
+************************************************/
+
+function startTimer(){
+
+updateTimer();
+
+timerInterval=
+
+setInterval(function(){
+
+remainingSeconds--;
+
+updateTimer();
+
+if(remainingSeconds<=0){
+
+clearInterval(timerInterval);
+
+submitExam(true);
+
+}
+
+},1000);
+
+}
+
+function updateTimer(){
+
+let min=
+
+Math.floor(remainingSeconds/60);
+
+let sec=
+
+remainingSeconds%60;
+
+timer.textContent=
+
+String(min).padStart(2,"0")
+
++
+
+":"
+
++
+
+String(sec).padStart(2,"0");
+
+}
+
+/************************************************
+LOAD QUESTION
+************************************************/
+
+function loadQuestion(){
+
+const q=QUESTIONS[currentQuestion];
+
+/* Display current section */
+
+sectionTitle.textContent=q.section;
+
+/* Display question number */
+
+questionNumber.textContent=
+
+"Question "
+
++
+
+(currentQuestion+1)
+
++
+
+" of "
+
++
+
+QUESTIONS.length;
+
+/* Display question */
+
+questionText.textContent=q.question;
+
+/* Display options */
+
+let html="";
+
+for(let i=0;i<q.options.length;i++){
+
+const checked=
+
+answers[currentQuestion]===i
+
+?
+
+"checked"
+
+:
+
+"";
+
+html+=`
+
+<label class="option">
+
+<input
+
+type="radio"
+
+name="answer"
+
+value="${i}"
+
+${checked}
+
+onchange="saveAnswer(${i})">
+
+<span>
+
+<b>${String.fromCharCode(65+i)}.</b>
+
+${q.options[i]}
+
+</span>
+
+</label>
+
+`;
+
+}
+
+optionsBox.innerHTML=html;
+
+updatePalette();
+
+}
+
+/************************************************
+SAVE ANSWER
+************************************************/
+
+function saveAnswer(option){
+
+answers[currentQuestion]=option;
+
+updatePalette();
+
+}
+
+/************************************************
+SAVE CURRENT SELECTION
+************************************************/
+
+function saveCurrentSelection(){
+
+const selected=
+
+document.querySelector(
+
+'input[name="answer"]:checked'
+
+);
+
+if(selected){
+
+answers[currentQuestion]=
+
+parseInt(selected.value);
+
+}
+
+}
+
+/************************************************
+NEXT QUESTION
+************************************************/
+
+function nextQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion<QUESTIONS.length-1){
+
+currentQuestion++;
+
+loadQuestion();
+
+}
+
+}
+
+/************************************************
+PREVIOUS QUESTION
+************************************************/
+
+function previousQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion>0){
+
+currentQuestion--;
+
+loadQuestion();
+
+}
+
+}
+
+/************************************************
+QUESTION PALETTE
+************************************************/
+
+function buildPalette(){
+
+palette.innerHTML="";
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const btn=
+
+document.createElement("button");
+
+btn.className="paletteBtn";
+
+btn.textContent=i+1;
+
+btn.onclick=function(){
+
+saveCurrentSelection();
+
+currentQuestion=i;
+
+loadQuestion();
+
+};
+
+palette.appendChild(btn);
+
+}
+
+updatePalette();
+
+}
+
+/************************************************
+UPDATE PALETTE
+************************************************/
+
+function updatePalette(){
+
+const buttons=
+
+document.querySelectorAll(".paletteBtn");
+
+buttons.forEach(function(btn,index){
+
+btn.classList.remove("current");
+
+btn.classList.remove("answered");
+
+if(index===currentQuestion){
+
+btn.classList.add("current");
+
+}
+
+if(answers[index]!==-1){
+
+btn.classList.add("answered");
+
+}
+
+});
+
+}
+
+/************************************************
+PREVENT ACCIDENTAL REFRESH
+************************************************/
+
+window.addEventListener(
+
+"beforeunload",
+
+function(e){
+
+if(examStarted){
+
+e.preventDefault();
+
+e.returnValue="";
+
+}
+
+}
+
+);
+
+/************************************************
+MANUAL SUBMIT
+************************************************/
+
+function manualSubmit(){
+
+saveCurrentSelection();
+
+let unanswered=0;
+
+answers.forEach(function(answer){
+
+if(answer===-1){
+
+unanswered++;
+
+}
+
+});
+
+let message="Are you sure you want to finish the test?";
+
+if(unanswered>0){
+
+message=
+
+"You have "
+
++
+
+unanswered
+
++
+
+" unanswered question(s).\n\nDo you still want to finish the test?";
+
+}
+
+if(confirm(message)){
+
+submitExam(false);
+
+}
+
+}
+
+/************************************************
+SUBMIT EXAM
+************************************************/
+
+function submitExam(timeUp){
+
+examStarted=false;
+
+clearInterval(timerInterval);
+
+window.onbeforeunload=null;
+
+examPage.classList.remove("active");
+
+resultPage.classList.add("active");
+
+calculateResult();
+
+if(timeUp){
+
+alert(
+
+"Time is over.\n\nYour test has been submitted automatically."
+
+);
+
+}
+
+}
+
+/************************************************
+CALCULATE RESULT
+************************************************/
+
+function calculateResult(){
+
+resultName.textContent=candidateName;
+
+resultEnrollment.textContent=enrollmentNumber;
+
+reviewArea.innerHTML="";
+
+let correct=0;
+
+let wrong=0;
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const q=QUESTIONS[i];
+
+if(answers[i]===q.answer){
+
+correct++;
+
+}
+
+else{
+
+wrong++;
+
+const yourAnswer=
+
+answers[i]===-1
+
+?
+
+"Not Answered"
+
+:
+
+String.fromCharCode(65+answers[i]);
+
+const correctAnswer=
+
+String.fromCharCode(65+q.answer);
+
+reviewArea.innerHTML+=`
+
+<div class="review">
+
+<b>${q.section}</b>
+
+<br><br>
+
+<b>Question ${i+1}</b>
+
+<br><br>
+
+${q.question}
+
+<br><br>
+
+<b>Your Answer :</b>
+
+${yourAnswer}
+
+<br>
+
+<b>Correct Answer :</b>
+
+${correctAnswer}
+
+</div>
+
+`;
+
+}
+
+}
+
+correctCount.textContent=correct;
+
+wrongCount.textContent=wrong;
+
+score.textContent=
+
+correct
+
++
+
+" / "
+
++
+
+QUESTIONS.length;
+
+percentage.textContent=
+
+(
+
+(correct/QUESTIONS.length)
+
+*100
+
+).toFixed(2)
+
++
+
+"%";
+
+const usedSeconds=
+
+CONFIG.durationMinutes*60
+
+-
+
+remainingSeconds;
+
+const minutes=
+
+Math.floor(usedSeconds/60);
+
+const seconds=
+
+usedSeconds%60;
+
+timeTaken.textContent=
+
+minutes
+
++
+
+" min "
+
++
+
+seconds
+
++
+
+" sec";
+
+}
+
+/************************************************
+END OF CBT ENGINE
+************************************************/
+
+</script>
+
+</body>
+
+</html>
+
