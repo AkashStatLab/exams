@@ -1,0 +1,2589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DSA - 3rd Year: Practice Set</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:#edf2f7;
+
+padding:20px;
+
+}
+
+.container{
+
+max-width:1300px;
+
+margin:auto;
+
+background:white;
+
+border-radius:10px;
+
+box-shadow:0 0 12px rgba(0,0,0,.15);
+
+padding:20px;
+
+}
+
+.page{
+
+display:none;
+
+}
+
+.page.active{
+
+display:block;
+
+}
+
+h1{
+
+text-align:center;
+
+color:#0d6efd;
+
+margin-bottom:20px;
+
+}
+
+h2{
+
+margin-bottom:15px;
+
+color:#333;
+
+}
+
+label{
+
+font-weight:bold;
+
+display:block;
+
+margin-top:12px;
+
+}
+
+input[type=text]{
+
+width:100%;
+
+padding:12px;
+
+font-size:16px;
+
+margin-top:5px;
+
+margin-bottom:10px;
+
+}
+
+button{
+
+background:#0d6efd;
+
+color:white;
+
+border:none;
+
+padding:10px 22px;
+
+font-size:15px;
+
+border-radius:5px;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#0a58ca;
+
+}
+
+ul{
+
+margin-left:20px;
+
+margin-top:10px;
+
+line-height:1.8;
+
+}
+
+.examLayout{
+
+display:grid;
+
+grid-template-columns:4fr 1fr;
+
+gap:20px;
+
+margin-top:20px;
+
+}
+
+.leftPanel{
+
+background:white;
+
+}
+
+.rightPanel{
+
+background:#f8f9fa;
+
+padding:15px;
+
+border-radius:8px;
+
+border:1px solid #ddd;
+
+height:fit-content;
+
+position:sticky;
+
+top:20px;
+
+}
+
+.topBar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:15px;
+
+background:#eef5ff;
+
+border-radius:8px;
+
+margin-bottom:20px;
+
+}
+
+#timer{
+
+font-size:24px;
+
+font-weight:bold;
+
+color:#c00000;
+
+}
+
+#questionNumber{
+
+font-size:20px;
+
+font-weight:bold;
+
+margin-bottom:10px;
+
+}
+
+#questionText{
+
+font-size:20px;
+
+line-height:1.6;
+
+margin-bottom:20px;
+
+}
+
+#questionText ul{
+
+margin:8px 0 18px 20px;
+
+padding-left:18px;
+
+}
+
+#questionText li{
+
+margin-bottom:4px;
+
+}
+
+#questionText p{
+
+margin-top:18px;
+
+}
+
+
+#questionText pre{
+
+background:#f5f5f5;
+
+border:1px solid #ddd;
+
+border-radius:6px;
+
+padding:12px;
+
+margin:12px 0;
+
+font-family:"Courier New",Consolas,monospace;
+
+font-size:14px;
+
+line-height:1.5;
+
+white-space:pre-wrap;
+
+text-align:left;
+
+overflow-x:auto;
+
+}
+
+
+
+.codeBlock{
+
+background:#f7f7f7;
+
+border:1px solid #d8d8d8;
+
+border-radius:6px;
+
+padding:15px;
+
+margin:15px 0;
+
+font-family:"Courier New",Consolas,monospace;
+
+font-size:15px;
+
+line-height:1.6;
+
+white-space:pre-wrap;
+
+overflow-x:auto;
+
+text-align:left;
+
+}
+
+
+
+
+
+.option{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:12px;
+
+padding:12px;
+
+border:1px solid #d8d8d8;
+
+border-radius:6px;
+
+margin-bottom:10px;
+
+cursor:pointer;
+
+}
+
+.option:hover{
+
+background:#eef6ff;
+
+}
+
+.option input{
+
+width:18px;
+
+height:18px;
+
+}
+
+.optionLabel{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:10px;
+
+flex:1;
+
+}
+
+.optionCode{
+
+margin:0;
+
+font-family:"Courier New",Consolas,monospace;
+
+font-size:14px;
+
+line-height:1.5;
+
+white-space:pre-wrap;
+
+text-align:left;
+
+}
+
+.navigation{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:25px;
+
+}
+
+#palette{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:8px;
+
+margin-top:15px;
+
+}
+
+.paletteBtn{
+
+padding:10px;
+
+border:none;
+
+background:#d8d8d8;
+
+border-radius:5px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+.paletteBtn.current{
+
+background:#0d6efd;
+
+color:white;
+
+}
+
+.paletteBtn.answered{
+
+background:#198754;
+
+color:white;
+
+}
+
+.reviewExplanation{
+
+margin-top:8px;
+
+padding:10px;
+
+background:#f8f9fa;
+
+border-left:4px solid #0d6efd;
+
+line-height:1.6;
+
+}
+
+.resultCard{
+
+background:#f8f8f8;
+
+padding:20px;
+
+border-radius:8px;
+
+line-height:2;
+
+margin-top:20px;
+
+}
+
+.review{
+
+margin-top:20px;
+
+padding:15px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+background:white;
+
+}
+
+hr{
+
+margin:20px 0;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage" class="page active">
+
+<h1>DSA - 3rd Year: Practice Set</h1>
+
+<h2>Candidate Details</h2>
+
+<label>Candidate Name</label>
+
+<input
+type="text"
+id="candidateName">
+
+<label>Enrollment Number</label>
+
+<input
+type="text"
+id="candidateEnrollment">
+
+<h2>Instructions</h2>
+
+<ul>
+
+<li>Total Questions : 60</li>
+
+<li>Duration : 90 Minutes</li>
+
+<li>Each Question carries 1 Mark.</li>
+
+<li>No Negative Marking.</li>
+
+<li>Do not refresh or close the browser during the examination.</li>
+
+</ul>
+
+<br>
+
+<button id="startBtn">
+
+Start Test
+
+</button>
+
+</div>
+
+<!-- EXAM PAGE -->
+
+<div id="examPage" class="page">
+
+<div class="topBar">
+
+<div>
+
+<b>Name :</b>
+
+<span id="displayName"></span>
+
+<br>
+
+<b>Enrollment :</b>
+
+<span id="displayEnrollment"></span>
+
+</div>
+
+<div>
+
+Time Left
+
+<div id="timer">
+
+90:00
+
+</div>
+
+</div>
+
+</div>
+
+<div class="examLayout">
+
+<div class="leftPanel">
+
+<div id="questionNumber"></div>
+
+<div id="questionText"></div>
+
+<div id="optionsBox"></div>
+
+<div class="navigation">
+
+<button id="prevBtn">
+
+Previous
+
+</button>
+
+<button id="nextBtn">
+
+Next
+
+</button>
+
+<button id="submitBtn">
+
+Submit Test
+
+</button>
+
+</div>
+
+</div>
+
+<div class="rightPanel">
+
+<h3>
+
+Question Palette
+
+</h3>
+
+<div id="palette">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RESULT PAGE -->
+
+<div id="resultPage" class="page">
+
+<h1>
+
+Test Result
+
+</h1>
+
+<div class="resultCard">
+
+<p>
+
+<b>Name :</b>
+
+<span id="resultName"></span>
+
+</p>
+
+<p>
+
+<b>Enrollment :</b>
+
+<span id="resultEnrollment"></span>
+
+</p>
+
+<hr>
+
+<p>
+
+Correct :
+
+<span id="correctCount"></span>
+
+</p>
+
+<p>
+
+Incorrect :
+
+<span id="wrongCount"></span>
+
+</p>
+
+<p>
+
+Score :
+
+<span id="score"></span>
+
+</p>
+
+<p>
+
+Percentage :
+
+<span id="percentage"></span>
+
+</p>
+
+<p>
+
+Time Taken :
+
+<span id="timeTaken"></span>
+
+</p>
+
+</div>
+
+<h2 style="margin-top:30px;">
+
+Incorrectly Answered Questions
+
+</h2>
+
+<div id="reviewArea">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/**************************************************
+
+CBT ENGINE v3.0
+
+Chunk 2 starts immediately below.
+
+**************************************************/
+
+/**************************************************
+CONFIGURATION
+**************************************************/
+
+const CONFIG = {
+title:"DSA - 3rd Year: Practice Set",
+durationMinutes:90,
+marksPerQuestion:1
+};
+
+/**************************************************
+QUESTIONS
+(We'll insert them in Chunks 3 & 4)
+**************************************************/
+
+
+const QUESTIONS = [
+
+/* =========================================================
+   ORIGINAL 40 QUESTIONS
+   ========================================================= */
+
+{
+question:"Which of the following ways is preferred to represent a graph for its efficient BFS and DFS traversals for a general graph which may not be very well connected?",
+
+options:[
+"Adjacency Matrix",
+"Adjacency List",
+"Both are same efficiency wise",
+"None of the two are efficient"
+],
+
+answer:1,
+
+explanation:"For a sparse or poorly connected graph, an adjacency list stores only the edges that actually exist, avoiding the O(V²) space required by an adjacency matrix. BFS and DFS can therefore traverse the graph efficiently using the adjacency list, typically in O(V + E) time."
+},
+
+{
+question:"Which data structure is normally used to implement BFS?",
+
+options:[
+"Stack",
+"Queue",
+"Priority Queue",
+"Disjoint Set"
+],
+
+answer:1,
+
+explanation:"BFS explores vertices level by level. A queue follows FIFO order, ensuring that vertices discovered earlier are processed before vertices discovered later at the same or a greater distance from the source."
+},
+
+{
+question:"Which data structure is naturally associated with recursive DFS?",
+
+options:[
+"Queue",
+"Stack",
+"Heap",
+"Hash Table"
+],
+
+answer:1,
+
+explanation:"Recursive DFS uses the program's call stack implicitly. Each recursive call adds a stack frame, and the frame is removed when the recursive call returns. An iterative DFS explicitly uses a stack to reproduce the same basic behavior."
+},
+
+{
+question:"Which of the following statements regarding BFS is correct for an unweighted, connected and undirected graph?",
+
+options:[
+"The paths found in the BFS traversal are the shortest paths from source to every other vertex",
+"BFS always finds the minimum-weight path",
+"BFS and DFS always produce the same sequence",
+"BFS cannot be used on an undirected graph"
+],
+
+answer:0,
+
+explanation:"In an unweighted graph, every edge has equal cost. BFS explores vertices in increasing order of their number of edges from the source. Therefore, the first time a vertex is reached, the corresponding path contains the minimum possible number of edges. This guarantee does not mean BFS finds minimum-weight paths in a general weighted graph."
+},
+
+{
+question:"Which algorithm is designed to find single-source shortest paths when negative edge weights may exist, provided there is no reachable negative-weight cycle?",
+
+options:[
+"Dijkstra",
+"Bellman-Ford",
+"Prim",
+"Kruskal"
+],
+
+answer:1,
+
+explanation:"Bellman-Ford repeatedly relaxes all edges and can correctly handle negative edge weights. After V - 1 passes, shortest paths are established when no reachable negative-weight cycle exists. An additional pass can be used to detect such a cycle."
+},
+
+{
+question:"Which pair of algorithms is used to construct a Minimum Spanning Tree of a connected weighted undirected graph?",
+
+options:[
+"Dijkstra and Bellman-Ford",
+"Prim and Kruskal",
+"BFS and DFS",
+"Dijkstra and Prim"
+],
+
+answer:1,
+
+explanation:"Prim's and Kruskal's algorithms are both designed to construct minimum spanning trees. Prim grows one tree from a starting vertex, whereas Kruskal considers edges globally in increasing order and uses DSU to avoid cycles."
+},
+
+{
+question:"In Kruskal's algorithm, why is an edge rejected when its endpoints already belong to the same DSU set?",
+
+options:[
+"It has the largest weight",
+"It would create a cycle",
+"It is directed",
+"It cannot be sorted"
+],
+
+answer:1,
+
+explanation:"If both endpoints already belong to the same connected component of the selected edges, there is already a path between them. Adding another edge between them would therefore create a cycle. Kruskal rejects such an edge."
+},
+
+{
+question:"For a graph with V vertices and E edges stored as an adjacency list, what is the usual time complexity of BFS or DFS when every reachable vertex and edge is processed once?",
+
+options:[
+"O(V)",
+"O(E)",
+"O(V + E)",
+"O(VE)"
+],
+
+answer:2,
+
+explanation:"With an adjacency list, every reachable vertex is processed once and every relevant adjacency entry is examined. This gives O(V + E) time for BFS or DFS. For an undirected graph, each edge appears in two adjacency lists, which only changes the constant factor."
+},
+
+{
+question:"Consider an unweighted graph with edges A-B, A-C, B-D, C-D. Starting BFS from A and visiting neighbors alphabetically, which is a valid BFS order?",
+
+options:[
+"A, B, C, D",
+"A, C, B, D",
+"A, B, D, C",
+"A, D, B, C"
+],
+
+answer:0,
+
+explanation:"BFS starts at A and discovers B and C in alphabetical order. Both are at distance 1. D is then discovered from B or C at distance 2. Therefore, A, B, C, D is the valid traversal order under the stated neighbor-order rule."
+},
+
+{
+question:"A graph has edges AB = 1, AC = 4, BC = 2, BD = 5, CD = 3. What is the total weight of an MST?",
+
+options:[
+"5",
+"6",
+"7",
+"8"
+],
+
+answer:1,
+
+explanation:"Using Kruskal's algorithm, select AB = 1, BC = 2, and CD = 3. These three edges connect all four vertices without forming a cycle. Their total weight is 1 + 2 + 3 = 6."
+},
+
+{
+question:"Traversal of a graph is somewhat different from a tree because:",
+
+options:[
+"There can be a loop in a graph, so we must maintain a visited flag for every vertex",
+"DFS of a graph uses a stack, but inorder traversal of a tree is recursive",
+"BFS of a graph uses a queue, but a time-efficient BFS of a tree is recursive",
+"All of the above"
+],
+
+answer:0,
+
+explanation:"The safest and technically correct reason is that a graph can contain cycles, so a traversal generally needs a visited mechanism to prevent repeatedly processing vertices. The original 'All of the above' key is not appropriate because the statement that a time-efficient BFS of a tree is recursive is not generally correct; BFS is naturally implemented with a queue."
+},
+
+{
+question:"Which of the following data structures are suitable for BFS, DFS, Prim's MST, and Kruskal's MST respectively?",
+
+options:[
+"Stack, Queue, Priority Queue, Union-Find",
+"Queue, Stack, Priority Queue, Union-Find",
+"Queue, Stack, Union-Find, Priority Queue",
+"Priority Queue, Queue, Stack, Union-Find"
+],
+
+answer:1,
+
+explanation:"BFS naturally uses a queue, while DFS uses a stack either explicitly or implicitly through recursion. Prim is commonly implemented efficiently with a priority queue, and Kruskal uses Union-Find/DSU to determine whether an edge connects two different components."
+},
+
+{
+question:"If a graph is disconnected, a single BFS or DFS starting at one vertex may fail to visit:",
+
+options:[
+"The starting vertex",
+"All vertices in other disconnected components",
+"Any adjacent vertex",
+"All vertices in the same component"
+],
+
+answer:1,
+
+explanation:"A traversal beginning at one vertex can reach only vertices in that vertex's connected component. Vertices belonging to other disconnected components have no path from the starting vertex and therefore remain unvisited unless another BFS/DFS is started from an unvisited vertex."
+},
+
+{
+question:"Which algorithm is guaranteed to work with negative edge weights but can report a reachable negative-weight cycle?",
+
+options:[
+"Dijkstra",
+"Bellman-Ford",
+"Prim",
+"Kruskal"
+],
+
+answer:1,
+
+explanation:"Bellman-Ford supports negative edge weights. After V - 1 relaxation passes, an additional pass can reveal whether a reachable edge can still be relaxed. If so, a reachable negative-weight cycle exists."
+},
+
+{
+question:"Which algorithm selects the minimum-weight edge connecting the current growing tree to a vertex outside it?",
+
+options:[
+"Kruskal",
+"Prim",
+"Bellman-Ford",
+"DFS"
+],
+
+answer:1,
+
+explanation:"Prim's algorithm maintains a growing tree. At each step it chooses the minimum-weight edge crossing from a vertex already in the tree to a vertex outside the tree. This is different from Kruskal, which globally considers the next lightest edge."
+},
+
+{
+question:"Which DSU optimization makes nodes on a find path point directly to the representative?",
+
+options:[
+"Union by size",
+"Path compression",
+"Edge relaxation",
+"Heapification"
+],
+
+answer:1,
+
+explanation:"Path compression modifies parent pointers encountered during find so that nodes on the path point directly to the representative. This flattens the DSU trees and makes future find operations much faster."
+},
+
+{
+question:"What is the key reason standard Dijkstra's algorithm is not suitable in general for graphs with negative edge weights?",
+
+options:[
+"It cannot use a priority queue",
+"A previously finalized vertex may later have a smaller distance",
+"It works only on undirected graphs",
+"It cannot store distances"
+],
+
+answer:1,
+
+explanation:"Dijkstra relies on the fact that once the minimum tentative-distance vertex is selected, its distance cannot later improve. A negative edge can violate this assumption by providing a cheaper route to a vertex that was already finalized."
+},
+
+{
+question:"For a connected graph with V vertices, how many edges are selected by any MST?",
+
+options:[
+"V",
+"V - 1",
+"E - 1",
+"2V"
+],
+
+answer:1,
+
+explanation:"Every tree with V vertices contains exactly V - 1 edges. An MST is a spanning tree, so regardless of the graph's original number of edges, every MST contains exactly V - 1 selected edges."
+},
+
+{
+question:"Suppose edges are processed by Kruskal in increasing order: AB=1, BC=2, AC=3, CD=4, BD=5. Which edges are selected for the MST?",
+
+options:[
+"AB, BC, AC",
+"AB, BC, CD",
+"AB, AC, CD",
+"BC, AC, BD"
+],
+
+answer:1,
+
+explanation:"Kruskal first selects AB = 1 and BC = 2. AC = 3 is rejected because A and C are already connected through B, so it would create a cycle. CD = 4 then connects D to the existing component and is accepted. Thus the selected edges are AB, BC, and CD."
+},
+
+{
+question:"Consider a graph with edges S-A=6, S-B=2, B-A=1, A-C=2, B-C=7. Using Dijkstra's algorithm from S, what is the shortest distance from S to C?",
+
+options:[
+"4",
+"5",
+"6",
+"7"
+],
+
+answer:1,
+
+explanation:"Initially, d(S)=0, d(A)=6 and d(B)=2. B is processed first, giving A = 2 + 1 = 3. A is then processed and gives C = 3 + 2 = 5. Therefore, the shortest distance from S to C is 5 via S → B → A → C."
+},
+
+{
+question:"Which traversal explores all vertices at the current distance level before moving farther from the source?",
+
+options:[
+"DFS",
+"BFS",
+"Prim",
+"Kruskal"
+],
+
+answer:1,
+
+explanation:"BFS processes vertices level by level. All vertices at distance k from the source are processed before vertices at distance k+1. A queue provides the FIFO behavior needed for this ordering."
+},
+
+{
+question:"Which of the following is a common application of DFS?",
+
+options:[
+"Detecting cycles in graphs",
+"Finding an MST by edge sorting",
+"Handling negative weights",
+"Maintaining disjoint sets"
+],
+
+answer:0,
+
+explanation:"DFS is commonly used for graph cycle detection, connected components, topological sorting, articulation points, and many other graph problems. Edge sorting for MST is associated with Kruskal, negative-weight shortest paths with Bellman-Ford, and disjoint-set maintenance with DSU."
+},
+
+{
+question:"For a dense graph, which representation usually requires O(V²) space regardless of the exact number of edges?",
+
+options:[
+"Adjacency List",
+"Adjacency Matrix",
+"Edge Stack",
+"DSU"
+],
+
+answer:1,
+
+explanation:"An adjacency matrix contains one entry for every ordered pair of vertices, resulting in O(V²) space. This remains true even if some possible edges are absent. An adjacency list instead uses O(V + E) space."
+},
+
+{
+question:"Which statement about BFS in an unweighted graph is correct?",
+
+options:[
+"It always finds the path with minimum total weight",
+"It finds a path with the minimum number of edges from the source",
+"It requires negative weights",
+"It constructs an MST in every graph"
+],
+
+answer:1,
+
+explanation:"BFS minimizes the number of edges from the source in an unweighted graph. Since every edge has equal cost, minimizing the number of edges is equivalent to minimizing total path cost in that special case."
+},
+
+{
+question:"Which algorithm should be preferred over Dijkstra when negative edge weights are present and shortest paths are required?",
+
+options:[
+"Prim",
+"Kruskal",
+"Bellman-Ford",
+"DFS"
+],
+
+answer:2,
+
+explanation:"Bellman-Ford is designed to handle negative edge weights in single-source shortest-path problems. It can also detect a reachable negative-weight cycle. Dijkstra's standard greedy correctness argument does not hold in the presence of negative edges."
+},
+
+{
+question:"Which two algorithms use different greedy strategies to construct an MST?",
+
+options:[
+"Dijkstra and Bellman-Ford",
+"Prim and Kruskal",
+"BFS and DFS",
+"Bellman-Ford and Dijkstra"
+],
+
+answer:1,
+
+explanation:"Prim and Kruskal are both greedy MST algorithms but make different choices. Prim expands one connected tree by selecting the lightest crossing edge, whereas Kruskal considers edges globally in increasing weight order and accepts an edge when it does not create a cycle."
+},
+
+{
+question:"A DSU initially contains 6 singleton sets. After union(0,1), union(2,3), union(1,3), and union(4,5), how many disjoint sets remain?",
+
+options:[
+"1",
+"2",
+"3",
+"4"
+],
+
+answer:1,
+
+explanation:"There are initially six sets. The first union reduces this to five, the second to four, the third merges the components containing {0,1} and {2,3}, reducing the count to three, and the fourth reduces it to two. Thus two disjoint sets remain."
+},
+
+{
+question:"A graph has 8 vertices and 10 edges and is represented by an adjacency list. What is the asymptotic space required to store the graph, ignoring the visited array?",
+
+options:[
+"O(V²)",
+"O(V + E)",
+"O(VE)",
+"O(E²)"
+],
+
+answer:1,
+
+explanation:"An adjacency list stores one list structure for each vertex and one adjacency entry for each edge endpoint. Therefore, its space complexity is O(V + E). For an undirected graph, every edge contributes two adjacency entries, which still gives O(V + E)."
+},
+
+{
+question:"In a connected weighted graph, the edges are AB=1, AC=2, BC=3, BD=4, CD=5. Starting Prim's algorithm at A, what is the total weight of the resulting MST?",
+
+options:[
+"5",
+"6",
+"7",
+"8"
+],
+
+answer:2,
+
+explanation:"Starting at A, Prim first selects AB = 1. From the current tree {A,B}, the cheapest edge to an outside vertex is AC = 2. The remaining vertex D is then connected through BD = 4. The total is 1 + 2 + 4 = 7."
+},
+
+{
+question:"A directed weighted graph has edges S-A=4, S-B=5, A-B=-2, B-C=3, A-C=4. What is the shortest distance from S to C?",
+
+options:[
+"4",
+"5",
+"6",
+"7"
+],
+
+answer:1,
+
+explanation:"The direct route S → A → C has cost 4 + 4 = 8. The route S → B → C has cost 5 + 3 = 8. However, using the negative edge gives S → A → B → C with cost 4 + (-2) + 3 = 5. Therefore the shortest distance is 5."
+},
+
+{
+question:"Which representation allows checking whether a particular edge (u, v) exists in O(1) time in the standard implementation?",
+
+options:[
+"Adjacency List",
+"Adjacency Matrix",
+"DFS Stack",
+"DSU"
+],
+
+answer:1,
+
+explanation:"In an adjacency matrix, the entry at A[u][v] directly indicates whether the edge exists, so checking it takes O(1) time. In an adjacency list, one generally has to search through u's neighbors, which can take O(degree(u))."
+},
+
+{
+question:"If BFS is started from a vertex in a connected graph containing V vertices, how many vertices will BFS eventually visit?",
+
+options:[
+"V - 1",
+"V",
+"E",
+"Only the immediate neighbors"
+],
+
+answer:1,
+
+explanation:"Because the graph is connected, every vertex is reachable from the chosen starting vertex. BFS will therefore eventually visit all V vertices."
+},
+
+{
+question:"Which algorithm is most appropriate for finding a minimum spanning tree by repeatedly choosing the globally smallest safe edge?",
+
+options:[
+"Prim",
+"Kruskal",
+"Dijkstra",
+"Bellman-Ford"
+],
+
+answer:1,
+
+explanation:"Kruskal's algorithm sorts edges globally by increasing weight and considers the lightest remaining edge. It accepts the edge when doing so does not create a cycle. DSU is commonly used to make this cycle check efficient."
+},
+
+{
+question:"What is the role of relaxation in Dijkstra's and Bellman-Ford algorithms?",
+
+options:[
+"To merge two DSU sets",
+"To update a distance if a shorter route is found",
+"To detect all graph cycles",
+"To sort adjacency lists"
+],
+
+answer:1,
+
+explanation:"Relaxation checks whether reaching v through an edge (u,v) gives a shorter path than the currently known distance. If dist[u] + w(u,v) is smaller than dist[v], dist[v] is updated. Both Dijkstra and Bellman-Ford use this operation."
+},
+
+{
+question:"Which statement about Union by Rank is correct?",
+
+options:[
+"It attaches the root of the smaller-rank tree under the larger-rank tree",
+"It always chooses the smaller vertex number as root",
+"It compresses every path automatically",
+"It sorts all edges"
+],
+
+answer:0,
+
+explanation:"Union by rank uses rank as an approximation of tree height. When merging two roots, the root with smaller rank is attached below the root with larger rank. If the ranks are equal, one root is chosen and its rank is increased."
+},
+
+{
+question:"Which algorithm can detect a reachable negative-weight cycle while computing single-source shortest paths?",
+
+options:[
+"Dijkstra",
+"Bellman-Ford",
+"Prim",
+"Kruskal"
+],
+
+answer:1,
+
+explanation:"Bellman-Ford performs V - 1 full relaxation passes and then checks for a further possible relaxation. If a reachable edge can still be relaxed, a reachable negative-weight cycle exists."
+},
+
+{
+question:"Let G be any undirected graph with positive edge weights, and T be a minimum spanning tree of G. For any two vertices u and v, let dG(u, v) be the shortest distance between u and v in G, and let dT(u, v) be the shortest distance between u and v using only the edges of T. Which statement is correct for all possible G, T, u and v?",
+
+options:[
+"dG(u, v) = dT(u, v)",
+"dG(u, v) ≤ dT(u, v)",
+"dG(u, v) ≥ dT(u, v)",
+"dG(u, v) ≠ dT(u, v)"
+],
+
+answer:1,
+
+explanation:"The MST is a subgraph of G. Therefore, the set of paths available inside T is a subset of the paths available in G. The unrestricted graph G can never have a longer shortest path than the restricted tree T. Hence dG(u,v) ≤ dT(u,v). Equality may occur, but it is not guaranteed."
+},
+
+{
+question:"In an undirected graph, an edge (u,v) is considered during Kruskal's algorithm. If find(u) and find(v) return the same representative, what should be done?",
+
+options:[
+"Accept the edge",
+"Reject the edge",
+"Run BFS",
+"Decrease its weight"
+],
+
+answer:1,
+
+explanation:"The same representative means u and v already belong to the same connected component formed by the selected edges. Adding (u,v) would therefore introduce a cycle, so Kruskal rejects the edge."
+},
+
+{
+question:"Consider an unweighted graph with edges 0-1, 0-2, 1-3, 2-4, 3-5, 4-5. Starting BFS at 0 and visiting smaller-numbered neighbors first, which is the BFS order?",
+
+options:[
+"0, 1, 2, 3, 4, 5",
+"0, 2, 1, 4, 3, 5",
+"0, 1, 3, 2, 4, 5",
+"0, 2, 4, 1, 3, 5"
+],
+
+answer:0,
+
+explanation:"BFS starts at 0 and discovers 1 and 2 in that order. Processing 1 discovers 3, while processing 2 discovers 4. Then 3 and 4 both lead to 5, but 5 is already discovered when the first of them reaches it. Thus the order is 0, 1, 2, 3, 4, 5."
+},
+
+{
+question:"A connected weighted graph has edges AB=2, AC=3, BC=1, BD=4, CD=2, CE=5, DE=1. What is the total weight of an MST?",
+
+options:[
+"5",
+"6",
+"7",
+"8"
+],
+
+answer:1,
+
+explanation:"Using Kruskal's algorithm, select BC = 1 and DE = 1. Then AB = 2 can be selected, followed by CD = 2, which connects the two components without creating a cycle. The selected edges have total weight 1 + 1 + 2 + 2 = 6. The graph now contains all five vertices with four edges, so this is an MST."
+},
+
+
+/* =========================================================
+   ADDITIONAL PLACEMENT / GATE-STYLE QUESTIONS
+   Q41 - Q60
+   ========================================================= */
+
+{
+question:`Consider the following adjacency lists for an undirected graph:
+
+<pre>
+0 : 1, 2
+1 : 0, 3, 4
+2 : 0, 4
+3 : 1, 5
+4 : 1, 2, 5
+5 : 3, 4
+</pre>
+
+Starting BFS from vertex 0 and visiting neighbors in the listed order, which traversal is obtained?`,
+
+options:[
+"0, 1, 2, 3, 4, 5",
+"0, 2, 1, 4, 3, 5",
+"0, 1, 3, 4, 2, 5",
+"0, 2, 4, 1, 3, 5"
+],
+
+answer:0,
+
+explanation:"Start with 0 and enqueue 1,2. Processing 1 discovers 3 and 4. Processing 2 does not discover anything new because 4 is already visited. The queue then processes 3 and 4, and 5 is discovered from 3. Therefore the BFS order is 0, 1, 2, 3, 4, 5."
+},
+
+{
+question:`Consider the following adjacency lists:
+
+<pre>
+0 : 1, 2
+1 : 0, 3
+2 : 0, 3, 4
+3 : 1, 2, 5
+4 : 2
+5 : 3
+</pre>
+
+A recursive DFS starts at 0 and always chooses the first unvisited neighbor in the listed order. What is the DFS traversal?`,
+
+options:[
+"0, 1, 3, 2, 4, 5",
+"0, 2, 4, 3, 1, 5",
+"0, 1, 2, 3, 5, 4",
+"0, 2, 3, 1, 5, 4"
+],
+
+answer:0,
+
+explanation:"DFS starts at 0 and chooses 1. From 1 it goes to 3. From 3, the first unvisited neighbor is 2. From 2, vertex 4 is visited. Backtracking eventually returns to 3 and visits 5. Thus the traversal is 0, 1, 3, 2, 4, 5."
+},
+
+{
+question:`Consider the following adjacency matrix:
+
+<pre>
+    0 1 2 3
+0 [ 0 1 1 0 ]
+1 [ 1 0 1 1 ]
+2 [ 1 1 0 0 ]
+3 [ 0 1 0 0 ]
+</pre>
+
+Starting BFS from vertex 0 and scanning each row from left to right, what is the BFS order?`,
+
+options:[
+"0, 1, 2, 3",
+"0, 2, 1, 3",
+"0, 1, 3, 2",
+"0, 2, 3, 1"
+],
+
+answer:0,
+
+explanation:"From 0, vertices 1 and 2 are discovered in that order. Vertex 1 is then processed and discovers 3. Vertex 2 has no new unvisited neighbor. Therefore the BFS traversal is 0, 1, 2, 3."
+},
+
+{
+question:"A graph has V vertices and E edges. It is represented using an adjacency matrix. What is the time complexity of a complete BFS traversal in the standard implementation?",
+
+options:[
+"O(V)",
+"O(E)",
+"O(V + E)",
+"O(V²)"
+],
+
+answer:3,
+
+explanation:"For every vertex removed from the BFS queue, the standard adjacency-matrix implementation scans the entire row of V possible neighbors. Across V vertices this gives O(V²) time. This is independent of whether the graph is sparse or dense."
+},
+
+{
+question:"A BFS is performed on an unweighted graph from source S. Vertex X is first discovered from vertex Y. What can be concluded?",
+
+options:[
+"Y is necessarily the only neighbor of X",
+"Y is on a shortest path from S to X",
+"Y has the smallest vertex number",
+"X has the smallest degree among all vertices"
+],
+
+answer:1,
+
+explanation:"BFS discovers vertices in nondecreasing order of distance from the source. If X is first discovered while processing Y, then dist(X) = dist(Y) + 1. Therefore the BFS tree edge Y-X lies on a shortest path from S to X."
+},
+
+{
+question:`Consider the following directed graph:
+
+<pre>
+S → A (4)
+S → B (2)
+B → A (1)
+A → C (3)
+B → C (7)
+C → D (2)
+A → D (10)
+</pre>
+
+What is the shortest distance from S to D?`,
+
+options:[
+"8",
+"9",
+"10",
+"11"
+],
+
+answer:0,
+
+explanation:"From S, the best route to A is S → B → A with cost 2 + 1 = 3. From A, reaching C costs another 3, giving S → B → A → C a total of 6. Finally C → D costs 2, giving a total of 8. The direct route S → A → D costs 14, so it is not optimal."
+},
+
+{
+question:"Bellman-Ford is run on a graph with V vertices and no reachable negative-weight cycle. In the standard algorithm, how many complete passes over all edges are sufficient to establish all shortest-path distances?",
+
+options:[
+"V",
+"V - 1",
+"E",
+"E - 1"
+],
+
+answer:1,
+
+explanation:"Any simple shortest path contains at most V - 1 edges. Bellman-Ford guarantees that after V - 1 complete relaxation passes, every shortest path has had enough opportunities to propagate its distance information. A further pass is used only to check for a reachable negative cycle."
+},
+
+{
+question:`Suppose Bellman-Ford has computed the following distances after V-1 passes:
+
+<pre>
+dist[A] = 4
+dist[B] = 7
+dist[C] = 10
+</pre>
+
+There is an edge A → C with weight 5. What does an additional relaxation check indicate?`,
+
+options:[
+"Nothing unusual because 4 + 5 = 9 is greater than 10",
+"C is unreachable",
+"A reachable negative-weight cycle must exist",
+"The distance to C can still be improved to 9"
+],
+
+answer:3,
+
+explanation:"Relaxation checks whether dist[A] + weight(A,C) < dist[C]. Here 4 + 5 = 9, which is smaller than the current dist[C] = 10. Therefore C can still be improved to 9. By itself, this does not prove a negative cycle unless the improvement occurs after the guaranteed V - 1 passes."
+},
+
+{
+question:"Which statement correctly distinguishes an MST from a shortest-path tree rooted at S?",
+
+options:[
+"Both always minimize the total weight of the tree",
+"An MST minimizes the distance from S to every vertex",
+"A shortest-path tree minimizes distances from S, while an MST minimizes total tree-edge weight",
+"An MST can contain cycles but a shortest-path tree cannot"
+],
+
+answer:2,
+
+explanation:"An MST optimizes the total weight of all selected tree edges. A shortest-path tree rooted at S instead preserves shortest distances from S to every reachable vertex. These objectives are different, so the two trees need not be identical."
+},
+
+{
+question:`Consider the following weighted undirected graph:
+
+<pre>
+A --1-- B
+|       |
+4       2
+|       |
+C --3-- D
+</pre>
+
+There is also an edge A-D with weight 5.
+
+What is the total weight of an MST?`,
+
+options:[
+"4",
+"5",
+"6",
+"7"
+],
+
+answer:2,
+
+explanation:"The edges in increasing order are AB=1, BD=2, CD=3, AC=4, AD=5. Kruskal selects AB, BD and CD. These three edges connect all four vertices without a cycle, with total weight 1 + 2 + 3 = 6. The remaining edges are unnecessary."
+},
+
+{
+question:"If all edge weights in a connected undirected graph are distinct, what can be concluded about its minimum spanning tree?",
+
+options:[
+"It has at least two different MSTs",
+"It has exactly one MST",
+"It has no MST",
+"Its MST must also be a shortest-path tree"
+],
+
+answer:1,
+
+explanation:"Distinct edge weights guarantee uniqueness of the MST. At every cut, the lightest crossing edge is uniquely determined, preventing ambiguity in the sequence of safe edge choices. Therefore the connected graph has exactly one MST."
+},
+
+{
+question:"A connected graph has 7 vertices. An algorithm produces a spanning tree containing 6 edges. Which statement is necessarily true?",
+
+options:[
+"The tree has a cycle",
+"The tree is disconnected",
+"The structure is consistent with being a spanning tree",
+"The graph must have exactly 6 edges"
+],
+
+answer:2,
+
+explanation:"Any tree containing V vertices has exactly V - 1 edges. For V = 7, this is 6 edges. Therefore six edges is exactly the required number for a spanning tree. The original graph may contain many additional edges."
+},
+
+{
+question:`Kruskal's algorithm processes the following edges in order:
+
+<pre>
+AB = 1
+BC = 2
+AC = 3
+CD = 4
+BD = 5
+AD = 6
+</pre>
+
+Which edge is the first one rejected?`,
+
+options:[
+"AB",
+"BC",
+"AC",
+"CD"
+],
+
+answer:2,
+
+explanation:"AB and BC are accepted first. After these two edges, A, B and C are already connected. Therefore AC would connect two vertices in the same DSU component and would create a cycle. It is the first rejected edge."
+},
+
+{
+question:"In Prim's algorithm, suppose the current MST fragment contains vertices {A, B, C}. Which edge can be selected next?",
+
+options:[
+"An edge entirely inside {A, B, C}",
+"The globally smallest edge anywhere in the graph",
+"The minimum-weight edge having exactly one endpoint in {A, B, C}",
+"Any edge incident on A"
+],
+
+answer:2,
+
+explanation:"Prim maintains one connected tree fragment. The next edge must cross the cut between the current tree and vertices outside it. Among all such crossing edges, Prim selects the minimum-weight one."
+},
+
+{
+question:`A DSU has the following parent array:
+
+<pre>
+index:   0 1 2 3 4 5
+parent:  0 0 1 1 3 4
+</pre>
+
+What is the representative returned by find(5)?`,
+
+options:[
+"0",
+"1",
+"3",
+"5"
+],
+
+answer:0,
+
+explanation:"Following parent links gives 5 → 4 → 3 → 1 → 0. Since parent[0] = 0, vertex 0 is the root and therefore the representative of the set containing 5."
+},
+
+{
+question:`A DSU starts with 8 singleton sets. The following operations are performed:
+
+<pre>
+union(0,1)
+union(2,3)
+union(4,5)
+union(6,7)
+union(1,3)
+union(5,7)
+</pre>
+
+How many disjoint sets remain?`,
+
+options:[
+"1",
+"2",
+"3",
+"4"
+],
+
+answer:1,
+
+explanation:"The first four unions create four two-element components. union(1,3) merges the components {0,1} and {2,3}, leaving three components. union(5,7) merges {4,5} and {6,7}, leaving two components. Therefore two disjoint sets remain."
+},
+
+{
+question:`Consider the following parent array before calling find(6):
+
+<pre>
+index:   0 1 2 3 4 5 6
+parent:  0 0 1 2 2 4 5
+</pre>
+
+After a full path-compressed find(6), what will parent[6] become?`,
+
+options:[
+"0",
+"1",
+"2",
+"5"
+],
+
+answer:0,
+
+explanation:"The path from 6 is 6 → 5 → 4 → 2 → 1 → 0. Node 0 is the representative. Full path compression makes 6 point directly to the root, so parent[6] becomes 0."
+},
+
+{
+question:"Two DSU sets have sizes 3 and 8. If union by size is used, which root becomes the parent of the other root?",
+
+options:[
+"The root of the size-3 set must become the parent",
+"The root of the size-8 set becomes the parent",
+"The root with the smaller vertex number always becomes the parent",
+"Either root must be chosen randomly"
+],
+
+answer:1,
+
+explanation:"Union by size attaches the smaller tree to the larger tree. Since the sets have sizes 3 and 8, the root of the size-3 set is attached below the root of the size-8 set. This helps keep the resulting tree shallow."
+},
+
+{
+question:`Suppose a DSU is used by Kruskal's algorithm. The currently selected edges form:
+
+<pre>
+Component 1: {A, B, C}
+Component 2: {D, E}
+Component 3: {F}
+</pre>
+
+The next edge considered is C-D.
+
+What should Kruskal do?`,
+
+options:[
+"Reject it because C and D are not roots",
+"Reject it because it creates a cycle",
+"Accept it because C and D belong to different components",
+"Accept it only if C is the representative"
+],
+
+answer:2,
+
+explanation:"C belongs to the first component and D belongs to the second. Since their representatives are different, adding C-D connects two previously separate components and cannot create a cycle. Kruskal therefore accepts the edge and unions the two components."
+},
+
+{
+question:"A graph contains 100 vertices and 200 edges. Which statement about BFS using an adjacency list is correct?",
+
+options:[
+"It necessarily takes O(100²) time",
+"It takes O(V + E), which is O(300) for this graph",
+"It takes O(E²)",
+"It takes O(VE) regardless of representation"
+],
+
+answer:1,
+
+explanation:"For an adjacency-list representation, BFS processes each reachable vertex and adjacency entry a constant number of times. Its complexity is O(V + E). Here V = 100 and E = 200, so the asymptotic expression is O(300), which is O(V + E)."
+},
+
+{
+question:"A graph has a negative-weight edge, but that edge lies in a component unreachable from the chosen source S. Can that unreachable negative edge by itself invalidate Dijkstra's shortest-path computation from S?",
+
+options:[
+"Yes, every negative edge anywhere makes Dijkstra invalid",
+"No, because the unreachable component cannot affect distances from S",
+"Yes, but only if the graph is undirected",
+"No, because Dijkstra automatically changes negative weights to zero"
+],
+
+answer:1,
+
+explanation:"Dijkstra's correctness requirement concerns edges that can influence shortest paths reachable from the source. A negative edge in a completely unreachable component cannot affect any distance from S. However, if the graph is treated as undirected, an apparently isolated edge may make its endpoints reachable depending on the surrounding connectivity, so reachability must be considered carefully."
+},
+
+{
+question:`Consider the following directed graph:
+
+<pre>
+S → A = 10
+S → B = 5
+B → A = 2
+A → C = 1
+B → C = 10
+</pre>
+
+After processing B in Dijkstra's algorithm, what are the tentative distances to A and C?`,
+
+options:[
+"A = 7, C = 15",
+"A = 10, C = 10",
+"A = 5, C = 7",
+"A = 12, C = 15"
+],
+
+answer:0,
+
+explanation:"Before processing B, the tentative distances are A = 10 and B = 5. Processing B gives a route to A of 5 + 2 = 7, so A is updated to 7. The route from B to C costs 5 + 10 = 15, so C becomes 15. Therefore the correct tentative distances are A = 7 and C = 15."
+},
+
+{
+question:`Consider the following weighted graph:
+
+<pre>
+S --2-- A
+|       |
+5       3
+|       |
+B --1-- C
+</pre>
+
+Additional edge: A-C = 1
+
+Using Dijkstra from S, what is the shortest distance from S to C?`,
+
+options:[
+"3",
+"4",
+"5",
+"6"
+],
+
+answer:0,
+
+explanation:"The direct route S → A → C has cost 2 + 1 = 3. The route S → B → C costs 5 + 1 = 6. Therefore the shortest distance from S to C is 3."
+},
+
+{
+question:`Consider the following C program:
+
+<pre class="codeBlock">
+#include &lt;stdio.h&gt;
+
+int main() {
+    double a[2] = {20.0, 25.0}, *p, *q;
+
+    p = a;
+    q = p + 1;
+
+    printf("%d,%d", (int)(q - p), (int)(*q - *p));
+
+    return 0;
+}
+</pre>
+
+What will be the output?`,
+
+options:[
+"4,8",
+"1,5",
+"8,5",
+"1,8"
+],
+
+answer:1,
+
+explanation:`The expression q - p performs pointer subtraction. Since q points to a[1] and p points to a[0], their difference is 1 element, not the difference in byte addresses.
+
+The expression *q - *p subtracts the values stored at those locations: 25.0 - 20.0 = 5.0, which becomes 5 after conversion to int.
+
+Therefore, the output is 1,5, so option B is correct.`
+},
+
+{
+question:`A circular queue is implemented using a singly linked list. The queue maintains two external pointers, FRONT and REAR, pointing to the front and rear nodes respectively.
+
+For insertion and deletion to both be performed in O(1) time, which of the following statements must be true?
+
+I. The next pointer of the FRONT node points to the REAR node.
+
+II. The next pointer of the REAR node points to the FRONT node.`,
+
+options:[
+"Statement I only",
+"Statement II only",
+"Both Statements I and II",
+"Neither Statement I nor II"
+],
+
+answer:1,
+
+explanation:`In a circular singly linked list representing a queue, the REAR node must point back to the FRONT node. This circular connection allows the queue to maintain its structure while supporting constant-time insertion and deletion when FRONT and REAR are maintained.
+
+The FRONT node does not need to point directly to REAR; its next pointer normally points to the node following FRONT.
+
+Therefore, only Statement II is correct, making option B the correct answer.`
+}
+
+];
+
+
+/**************************************************
+GLOBAL VARIABLES
+**************************************************/
+
+let candidateName="";
+let enrollmentNumber="";
+
+let currentQuestion=0;
+
+let answers=[];
+
+let examStarted=false;
+
+let timerInterval=null;
+
+let remainingSeconds=
+CONFIG.durationMinutes*60;
+
+/**************************************************
+INITIALISE ANSWERS
+**************************************************/
+
+function initialiseAnswers(){
+
+answers=[];
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+answers.push(-1);
+
+}
+
+}
+
+/**************************************************
+PAGE REFERENCES
+**************************************************/
+
+const loginPage=
+document.getElementById("loginPage");
+
+const examPage=
+document.getElementById("examPage");
+
+const resultPage=
+document.getElementById("resultPage");
+
+const candidateNameInput=
+document.getElementById("candidateName");
+
+const candidateEnrollmentInput=
+document.getElementById("candidateEnrollment");
+
+const displayName=
+document.getElementById("displayName");
+
+const displayEnrollment=
+document.getElementById("displayEnrollment");
+
+const questionNumber=
+document.getElementById("questionNumber");
+
+const questionText=
+document.getElementById("questionText");
+
+const optionsBox=
+document.getElementById("optionsBox");
+
+const palette=
+document.getElementById("palette");
+
+const timer=
+document.getElementById("timer");
+
+const resultName=
+document.getElementById("resultName");
+
+const resultEnrollment=
+document.getElementById("resultEnrollment");
+
+const correctCount=
+document.getElementById("correctCount");
+
+const wrongCount=
+document.getElementById("wrongCount");
+
+const score=
+document.getElementById("score");
+
+const percentage=
+document.getElementById("percentage");
+
+const timeTaken=
+document.getElementById("timeTaken");
+
+const reviewArea=
+document.getElementById("reviewArea");
+
+/**************************************************
+BUTTON EVENTS
+**************************************************/
+
+document
+.getElementById("startBtn")
+.addEventListener("click",startExam);
+
+document
+.getElementById("prevBtn")
+.addEventListener("click",previousQuestion);
+
+document
+.getElementById("nextBtn")
+.addEventListener("click",nextQuestion);
+
+document
+.getElementById("submitBtn")
+.addEventListener("click",manualSubmit);
+
+/**************************************************
+START EXAM
+**************************************************/
+
+function startExam(){
+
+candidateName=
+candidateNameInput.value.trim();
+
+enrollmentNumber=
+candidateEnrollmentInput.value.trim();
+
+if(candidateName===""){
+
+alert("Please enter Candidate Name.");
+
+return;
+
+}
+
+if(enrollmentNumber===""){
+
+alert("Please enter Enrollment Number.");
+
+return;
+
+}
+
+displayName.textContent=
+candidateName;
+
+displayEnrollment.textContent=
+enrollmentNumber;
+
+initialiseAnswers();
+
+loginPage.classList.remove("active");
+
+examPage.classList.add("active");
+
+examStarted=true;
+
+buildPalette();
+
+loadQuestion();
+
+startTimer();
+
+}
+
+/**************************************************
+TIMER
+**************************************************/
+
+function startTimer(){
+
+updateTimer();
+
+timerInterval=setInterval(function(){
+
+remainingSeconds--;
+
+updateTimer();
+
+if(remainingSeconds<=0){
+
+clearInterval(timerInterval);
+
+submitExam(true);
+
+}
+
+},1000);
+
+}
+
+function updateTimer(){
+
+let min=
+Math.floor(remainingSeconds/60);
+
+let sec=
+remainingSeconds%60;
+
+timer.textContent=
+
+String(min).padStart(2,"0")
+
++
+
+":"
+
++
+
+String(sec).padStart(2,"0");
+
+}
+
+/**************************************************
+LOAD QUESTION
+**************************************************/
+
+function loadQuestion(){
+
+const q=QUESTIONS[currentQuestion];
+
+questionNumber.textContent=
+
+"Question "
+
++
+
+(currentQuestion+1)
+
++
+
+" of "
+
++
+
+QUESTIONS.length;
+
+/* Display question */
+
+let questionHTML=`<div>${q.question}</div>`;
+
+if(q.code){
+
+questionHTML+=`
+
+<pre class="codeBlock">${q.code}</pre>
+
+`;
+
+}
+
+if(q.questionAfterCode){
+
+questionHTML+=`
+
+<div>${q.questionAfterCode}</div>
+
+`;
+
+}
+
+questionText.innerHTML=questionHTML;
+
+let html="";
+
+for(let i=0;i<q.options.length;i++){
+
+const checked=
+
+answers[currentQuestion]===i
+
+?
+
+"checked"
+
+:
+
+"";
+
+html+=`
+
+<label class="option">
+
+<input
+
+type="radio"
+
+name="answer"
+
+value="${i}"
+
+${checked}
+
+onchange="saveAnswer(${i})">
+
+<span class="optionLabel">
+
+<b>${String.fromCharCode(65+i)}.</b>
+
+<span class="optionCode">${q.options[i]}</span>
+
+</span>
+
+</label>
+
+`;
+
+}
+
+optionsBox.innerHTML=html;
+
+updatePalette();
+
+}
+
+/**************************************************
+SAVE ANSWER
+**************************************************/
+
+function saveAnswer(option){
+
+answers[currentQuestion]=option;
+
+updatePalette();
+
+}
+
+/**************************************************
+SAVE CURRENT SELECTION
+**************************************************/
+
+function saveCurrentSelection(){
+
+const selected=
+
+document.querySelector(
+
+'input[name="answer"]:checked'
+
+);
+
+if(selected){
+
+answers[currentQuestion]=
+
+parseInt(selected.value);
+
+}
+
+}
+
+/**************************************************
+NEXT QUESTION
+**************************************************/
+
+function nextQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion<QUESTIONS.length-1){
+
+currentQuestion++;
+
+loadQuestion();
+
+}
+
+}
+
+/**************************************************
+PREVIOUS QUESTION
+**************************************************/
+
+function previousQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion>0){
+
+currentQuestion--;
+
+loadQuestion();
+
+}
+
+}
+
+/**************************************************
+QUESTION PALETTE
+**************************************************/
+
+function buildPalette(){
+
+palette.innerHTML="";
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const btn=document.createElement("button");
+
+btn.textContent=i+1;
+
+btn.className="paletteBtn";
+
+btn.onclick=function(){
+
+saveCurrentSelection();
+
+currentQuestion=i;
+
+loadQuestion();
+
+};
+
+palette.appendChild(btn);
+
+}
+
+updatePalette();
+
+}
+
+/**************************************************
+UPDATE PALETTE
+**************************************************/
+
+function updatePalette(){
+
+const buttons=
+
+document.querySelectorAll(".paletteBtn");
+
+buttons.forEach(function(btn,index){
+
+btn.classList.remove("current");
+
+btn.classList.remove("answered");
+
+if(index===currentQuestion){
+
+btn.classList.add("current");
+
+}
+
+if(answers[index]!==-1){
+
+btn.classList.add("answered");
+
+}
+
+});
+
+}
+
+/**************************************************
+REFRESH / CLOSE WARNING
+**************************************************/
+
+window.addEventListener(
+
+"beforeunload",
+
+function(e){
+
+if(examStarted){
+
+e.preventDefault();
+
+e.returnValue="";
+
+}
+
+}
+
+);
+
+/**************************************************
+MANUAL SUBMIT
+**************************************************/
+
+function manualSubmit(){
+
+saveCurrentSelection();
+
+let unanswered=0;
+
+answers.forEach(function(a){
+
+if(a===-1){
+
+unanswered++;
+
+}
+
+});
+
+let message="Are you sure you want to submit the test?";
+
+if(unanswered>0){
+
+message=
+
+"You have "
+
++
+
+unanswered
+
++
+
+" unanswered question(s).\n\nDo you still want to submit?";
+
+}
+
+if(confirm(message)){
+
+submitExam(false);
+
+}
+
+}
+
+/**************************************************
+SUBMIT EXAM
+**************************************************/
+
+function submitExam(timeUp){
+
+examStarted=false;
+
+clearInterval(timerInterval);
+
+window.onbeforeunload=null;
+
+examPage.classList.remove("active");
+
+resultPage.classList.add("active");
+
+calculateResult();
+
+if(timeUp){
+
+alert(
+
+"Time is over.\n\nYour test has been submitted automatically."
+
+);
+
+}
+
+}
+
+/**************************************************
+RESULT CALCULATION
+**************************************************/
+
+function calculateResult(){
+
+resultName.textContent=candidateName;
+
+resultEnrollment.textContent=enrollmentNumber;
+
+reviewArea.innerHTML="";
+
+let correct=0;
+
+let wrong=0;
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const q=QUESTIONS[i];
+
+if(answers[i]===q.answer){
+
+correct++;
+
+}
+
+else{
+
+wrong++;
+
+const yourAnswer=
+
+answers[i]===-1
+
+?
+
+"Not Answered"
+
+:
+
+String.fromCharCode(65+answers[i]);
+
+const correctAnswer=
+
+String.fromCharCode(65+q.answer);
+
+reviewArea.innerHTML+=`
+
+<div class="review">
+
+
+<b>Question ${i+1}</b>
+
+<br><br>
+
+${q.question}
+
+${q.code ? `
+<br><br>
+<pre class="optionCode">${q.code}</pre>
+` : ""}
+
+${q.questionAfterCode ? `
+<br><br>
+${q.questionAfterCode}
+` : ""}
+
+<br><br>
+
+<b>Your Answer :</b>
+
+${yourAnswer}
+
+<br>
+
+<b>Correct Answer :</b>
+
+${correctAnswer}
+
+<br><br>
+
+<b>Explanation :</b>
+
+<div class="reviewExplanation">
+
+${q.explanation || "Explanation not available."}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+}
+
+correctCount.textContent=correct;
+
+wrongCount.textContent=wrong;
+
+score.textContent=
+
+correct
+
++
+
+" / "
+
++
+
+QUESTIONS.length;
+
+percentage.textContent=
+
+(
+
+(correct/QUESTIONS.length)
+
+*100
+
+).toFixed(2)
+
++
+
+"%";
+
+const usedSeconds=
+
+CONFIG.durationMinutes*60
+
+-
+
+remainingSeconds;
+
+const minutes=
+
+Math.floor(usedSeconds/60);
+
+const seconds=
+
+usedSeconds%60;
+
+timeTaken.textContent=
+
+minutes
+
++
+
+" min "
+
++
+
+seconds
+
++
+
+" sec";
+
+}
+
+/**************************************************
+END OF ENGINE
+**************************************************/
+
+</script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DSA - Set Systems: Disjoint Set Union, Union-Find and Union-Find Heuristics</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:#edf2f7;
+
+padding:20px;
+
+}
+
+.container{
+
+max-width:1300px;
+
+margin:auto;
+
+background:white;
+
+border-radius:10px;
+
+box-shadow:0 0 12px rgba(0,0,0,.15);
+
+padding:20px;
+
+}
+
+.page{
+
+display:none;
+
+}
+
+.page.active{
+
+display:block;
+
+}
+
+h1{
+
+text-align:center;
+
+color:#0d6efd;
+
+margin-bottom:20px;
+
+}
+
+h2{
+
+margin-bottom:15px;
+
+color:#333;
+
+}
+
+label{
+
+font-weight:bold;
+
+display:block;
+
+margin-top:12px;
+
+}
+
+input[type=text]{
+
+width:100%;
+
+padding:12px;
+
+font-size:16px;
+
+margin-top:5px;
+
+margin-bottom:10px;
+
+}
+
+button{
+
+background:#0d6efd;
+
+color:white;
+
+border:none;
+
+padding:10px 22px;
+
+font-size:15px;
+
+border-radius:5px;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#0a58ca;
+
+}
+
+ul{
+
+margin-left:20px;
+
+margin-top:10px;
+
+line-height:1.8;
+
+}
+
+.examLayout{
+
+display:grid;
+
+grid-template-columns:4fr 1fr;
+
+gap:20px;
+
+margin-top:20px;
+
+}
+
+.leftPanel{
+
+background:white;
+
+}
+
+.rightPanel{
+
+background:#f8f9fa;
+
+padding:15px;
+
+border-radius:8px;
+
+border:1px solid #ddd;
+
+height:fit-content;
+
+position:sticky;
+
+top:20px;
+
+}
+
+.topBar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:15px;
+
+background:#eef5ff;
+
+border-radius:8px;
+
+margin-bottom:20px;
+
+}
+
+#timer{
+
+font-size:24px;
+
+font-weight:bold;
+
+color:#c00000;
+
+}
+
+#questionNumber{
+
+font-size:20px;
+
+font-weight:bold;
+
+margin-bottom:10px;
+
+}
+
+#questionText{
+
+font-size:20px;
+
+line-height:1.6;
+
+margin-bottom:20px;
+
+}
+
+#questionText ul{
+
+margin:8px 0 18px 20px;
+
+padding-left:18px;
+
+}
+
+#questionText li{
+
+margin-bottom:4px;
+
+}
+
+#questionText p{
+
+margin-top:18px;
+
+}
+
+
+#questionText pre{
+
+background:#f5f5f5;
+
+border:1px solid #ddd;
+
+border-radius:6px;
+
+padding:12px;
+
+margin:12px 0;
+
+font-family:"Courier New",Consolas,monospace;
+
+font-size:14px;
+
+line-height:1.5;
+
+white-space:pre-wrap;
+
+text-align:left;
+
+overflow-x:auto;
+
+}
+
+
+
+.codeBlock{
+
+background:#f7f7f7;
+
+border:1px solid #d8d8d8;
+
+border-radius:6px;
+
+padding:15px;
+
+margin:15px 0;
+
+font-family:"Courier New",Consolas,monospace;
+
+font-size:15px;
+
+line-height:1.6;
+
+white-space:pre-wrap;
+
+overflow-x:auto;
+
+text-align:left;
+
+}
+
+
+
+
+
+.option{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:12px;
+
+padding:12px;
+
+border:1px solid #d8d8d8;
+
+border-radius:6px;
+
+margin-bottom:10px;
+
+cursor:pointer;
+
+}
+
+.option:hover{
+
+background:#eef6ff;
+
+}
+
+.option input{
+
+width:18px;
+
+height:18px;
+
+}
+
+.optionLabel{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:10px;
+
+flex:1;
+
+}
+
+.optionCode{
+
+margin:0;
+
+font-family:"Courier New",Consolas,monospace;
+
+font-size:14px;
+
+line-height:1.5;
+
+white-space:pre-wrap;
+
+text-align:left;
+
+}
+
+.navigation{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:25px;
+
+}
+
+#palette{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:8px;
+
+margin-top:15px;
+
+}
+
+.paletteBtn{
+
+padding:10px;
+
+border:none;
+
+background:#d8d8d8;
+
+border-radius:5px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+.paletteBtn.current{
+
+background:#0d6efd;
+
+color:white;
+
+}
+
+.paletteBtn.answered{
+
+background:#198754;
+
+color:white;
+
+}
+
+.reviewExplanation{
+
+margin-top:8px;
+
+padding:10px;
+
+background:#f8f9fa;
+
+border-left:4px solid #0d6efd;
+
+line-height:1.6;
+
+}
+
+.resultCard{
+
+background:#f8f8f8;
+
+padding:20px;
+
+border-radius:8px;
+
+line-height:2;
+
+margin-top:20px;
+
+}
+
+.review{
+
+margin-top:20px;
+
+padding:15px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+background:white;
+
+}
+
+hr{
+
+margin:20px 0;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage" class="page active">
+
+<h1>DSA - Set Systems: Disjoint Set Union, Union-Find and Union-Find Heuristics</h1>
+
+<h2>Candidate Details</h2>
+
+<label>Candidate Name</label>
+
+<input
+type="text"
+id="candidateName">
+
+<label>Enrollment Number</label>
+
+<input
+type="text"
+id="candidateEnrollment">
+
+<h2>Instructions</h2>
+
+<ul>
+
+<li>Total Questions : 25</li>
+
+<li>Duration : 40 Minutes</li>
+
+<li>Each Question carries 1 Mark.</li>
+
+<li>No Negative Marking.</li>
+
+<li>Do not refresh or close the browser during the examination.</li>
+
+</ul>
+
+<br>
+
+<button id="startBtn">
+
+Start Test
+
+</button>
+
+</div>
+
+<!-- EXAM PAGE -->
+
+<div id="examPage" class="page">
+
+<div class="topBar">
+
+<div>
+
+<b>Name :</b>
+
+<span id="displayName"></span>
+
+<br>
+
+<b>Enrollment :</b>
+
+<span id="displayEnrollment"></span>
+
+</div>
+
+<div>
+
+Time Left
+
+<div id="timer">
+
+40:00
+
+</div>
+
+</div>
+
+</div>
+
+<div class="examLayout">
+
+<div class="leftPanel">
+
+<div id="questionNumber"></div>
+
+<div id="questionText"></div>
+
+<div id="optionsBox"></div>
+
+<div class="navigation">
+
+<button id="prevBtn">
+
+Previous
+
+</button>
+
+<button id="nextBtn">
+
+Next
+
+</button>
+
+<button id="submitBtn">
+
+Submit Test
+
+</button>
+
+</div>
+
+</div>
+
+<div class="rightPanel">
+
+<h3>
+
+Question Palette
+
+</h3>
+
+<div id="palette">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RESULT PAGE -->
+
+<div id="resultPage" class="page">
+
+<h1>
+
+Test Result
+
+</h1>
+
+<div class="resultCard">
+
+<p>
+
+<b>Name :</b>
+
+<span id="resultName"></span>
+
+</p>
+
+<p>
+
+<b>Enrollment :</b>
+
+<span id="resultEnrollment"></span>
+
+</p>
+
+<hr>
+
+<p>
+
+Correct :
+
+<span id="correctCount"></span>
+
+</p>
+
+<p>
+
+Incorrect :
+
+<span id="wrongCount"></span>
+
+</p>
+
+<p>
+
+Score :
+
+<span id="score"></span>
+
+</p>
+
+<p>
+
+Percentage :
+
+<span id="percentage"></span>
+
+</p>
+
+<p>
+
+Time Taken :
+
+<span id="timeTaken"></span>
+
+</p>
+
+</div>
+
+<h2 style="margin-top:30px;">
+
+Incorrectly Answered Questions
+
+</h2>
+
+<div id="reviewArea">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/**************************************************
+
+CBT ENGINE v3.0
+
+Chunk 2 starts immediately below.
+
+**************************************************/
+
+/**************************************************
+CONFIGURATION
+**************************************************/
+
+const CONFIG = {
+title:"DSA - Set Systems: Disjoint Set Union, Union-Find and Union-Find Heuristics",
+durationMinutes:40,
+marksPerQuestion:1
+};
+
+/**************************************************
+QUESTIONS
+(We'll insert them in Chunks 3 & 4)
+**************************************************/
+
+
+const QUESTIONS = [
+
+{
+question:"What is the primary purpose of a Disjoint Set Union (DSU) data structure?",
+
+options:[
+"To store elements in sorted order",
+"To maintain a collection of disjoint sets and efficiently support connectivity operations",
+"To find shortest paths in a graph",
+"To perform binary search"
+],
+
+answer:1,
+
+explanation:"A Disjoint Set Union (DSU), also called Union-Find, maintains a collection of non-overlapping sets. Its main operations are find(), which identifies the representative of the set containing an element, and union(), which combines two sets. DSU is particularly useful for dynamic connectivity problems and for detecting cycles in Kruskal's algorithm."
+},
+
+{
+question:"Which operation in Union-Find determines the representative (root) of the set containing an element?",
+
+options:[
+"union()",
+"find()",
+"merge()",
+"connect()"
+],
+
+answer:1,
+
+explanation:"The find() operation follows the parent links of an element until it reaches the root or representative of its set. The representative is then used to determine whether two elements belong to the same set. With path compression, find() can also make future searches significantly faster."
+},
+
+{
+question:"What is the main purpose of the union() operation?",
+
+options:[
+"To delete a set",
+"To find the minimum element",
+"To combine two different sets into one set",
+"To sort all elements"
+],
+
+answer:2,
+
+explanation:"The union() operation combines two disjoint sets into a single set. Typically, union(x, y) first finds the representatives of x and y. If the representatives are different, the two sets are merged. If they are already the same, no structural change is necessary."
+},
+
+{
+question:"Initially, if every element is placed in its own singleton set, how many disjoint sets are there for n elements?",
+
+options:[
+"1",
+"n - 1",
+"n",
+"2n"
+],
+
+answer:2,
+
+explanation:"If every one of the n elements initially forms its own singleton set, there is exactly one set for each element. Therefore, the total number of disjoint sets is n."
+},
+
+{
+question:"Suppose the sets are {1, 2, 3} and {4, 5}. If union(2, 5) is performed, what is the result?",
+
+options:[
+"The two sets remain separate",
+"The two sets are combined into one set containing 1, 2, 3, 4, 5",
+"Only 2 and 5 are deleted",
+"A new set containing only 2 and 5 is created"
+],
+
+answer:1,
+
+explanation:"The find operation for 2 identifies the set {1, 2, 3}, while find(5) identifies {4, 5}. Since their representatives are different, union(2, 5) merges the two sets. The resulting set contains all five elements: {1, 2, 3, 4, 5}."
+},
+
+{
+question:"Consider the following sequence, starting with five singleton sets: union(0,1), union(1,2), union(3,4). How many disjoint sets remain?",
+
+options:[
+"1",
+"2",
+"3",
+"4"
+],
+
+answer:1,
+
+explanation:"Initially there are five sets: {0}, {1}, {2}, {3}, and {4}. union(0,1) reduces the count to four. union(1,2) merges the set containing 1 with the set containing 2, reducing the count to three. union(3,4) reduces it to two. The final sets are {0,1,2} and {3,4}."
+},
+
+{
+question:"In a Union-Find implementation where each root is represented as its own parent, how is a root node x identified?",
+
+options:[
+"parent[x] == x",
+"parent[x] == 0",
+"parent[x] > x",
+"parent[x] == -1"
+],
+
+answer:0,
+
+explanation:"In the common parent-array representation of Union-Find, a root points to itself. Therefore, x is a root precisely when parent[x] == x. The actual numeric value of x is irrelevant; what matters is that the parent of the node is itself."
+},
+
+{
+question:"Suppose parent[0] = 0, parent[1] = 0, parent[2] = 1, and parent[3] = 2. Which element is the representative of the set containing 3?",
+
+options:[
+"0",
+"1",
+"2",
+"3"
+],
+
+answer:0,
+
+explanation:"Starting from 3, follow the parent links: 3 → 2 → 1 → 0. Since parent[0] = 0, node 0 is the root. Therefore, 0 is the representative of the set containing 3. If path compression is applied, nodes along this path may subsequently point directly to 0."
+},
+
+{
+question:"Why is path compression used in the find() operation?",
+
+options:[
+"To increase the height of the tree",
+"To make future find operations faster by making nodes point closer to the root",
+"To sort the elements",
+"To create a new set for every element"
+],
+
+answer:1,
+
+explanation:"Path compression changes the parent pointers of nodes encountered during find() so that they point directly, or more closely, to the representative. This flattens the tree and makes subsequent find operations faster. Path compression does not change which elements belong to a set."
+},
+
+{
+question:"Which technique is used in Kruskal's algorithm to efficiently determine whether adding an edge will form a cycle?",
+
+options:[
+"Binary search",
+"Disjoint Set Union / Union-Find",
+"BFS",
+"Dijkstra's algorithm"
+],
+
+answer:1,
+
+explanation:"Kruskal's algorithm processes edges in increasing order of weight. Before adding an edge (u, v), it checks whether u and v already belong to the same connected component using DSU. If they do, adding the edge would create a cycle, so the edge is rejected."
+},
+
+{
+question:"In a Union-Find data structure, two elements belong to the same set if:",
+
+options:[
+"They have the same index",
+"Their find() operations return the same representative",
+"Their values are consecutive",
+"They have the same parent immediately"
+],
+
+answer:1,
+
+explanation:"Two elements belong to the same disjoint set exactly when their find() operations return the same representative. The elements do not need to have the same immediate parent because the parent structure may contain several levels. What matters is that both paths ultimately lead to the same root."
+},
+
+{
+question:"If find(x) and find(y) return different representatives, what does this indicate?",
+
+options:[
+"x and y are in different disjoint sets",
+"x and y are always adjacent",
+"x and y are the same element",
+"The data structure is invalid"
+],
+
+answer:0,
+
+explanation:"The representative uniquely identifies a disjoint set. Therefore, if find(x) and find(y) return different representatives, x and y belong to different sets. This is also the condition under which union(x, y) can merge the two sets."
+},
+
+{
+question:"If union(x, y) is called when x and y are already in the same set, what should happen?",
+
+options:[
+"The set is split into two",
+"A new singleton set is created",
+"The structure remains unchanged",
+"All elements are deleted"
+],
+
+answer:2,
+
+explanation:"If find(x) and find(y) return the same representative, x and y are already connected. There is no second set to merge, so union(x, y) leaves the DSU unchanged. In Kruskal's algorithm, the corresponding edge would be rejected because adding it would create a cycle."
+},
+
+{
+question:"Which heuristic attaches the root of the smaller tree to the root of the larger tree?",
+
+options:[
+"Path compression",
+"Union by size",
+"Binary lifting",
+"Breadth-first search"
+],
+
+answer:1,
+
+explanation:"Union by size compares the sizes of the two trees or components. The root of the smaller tree is attached to the root of the larger tree. This helps prevent the parent trees from becoming unnecessarily tall, improving the efficiency of future find operations."
+},
+
+{
+question:"Which heuristic generally uses an estimate of tree height to decide which root becomes the parent?",
+
+options:[
+"Union by rank",
+"Path compression",
+"Adjacency listing",
+"Topological sorting"
+],
+
+answer:0,
+
+explanation:"Union by rank uses a rank value as an approximation of the height of each tree. When two sets are merged, the root with the smaller rank is generally attached below the root with the larger rank. If the ranks are equal, one root becomes the parent and its rank is increased."
+},
+
+{
+question:"What is the main effect of path compression during find(x)?",
+
+options:[
+"It increases the number of sets",
+"It directly connects nodes on the search path to the representative",
+"It removes all edges from the structure",
+"It changes the element values"
+],
+
+answer:1,
+
+explanation:"During find(x), path compression updates nodes encountered along the path so that they point directly to the representative. For example, if the path is x → a → b → r, after full compression x and the intermediate nodes can point directly to r. This reduces the depth of the structure and speeds up future operations."
+},
+
+{
+question:"Suppose the parent links are 5 → 3, 3 → 1, and 1 → 1. After performing find(5) with full path compression, what should parent[5] become?",
+
+options:[
+"5",
+"3",
+"1",
+"0"
+],
+
+answer:2,
+
+explanation:"The path from 5 to the root is 5 → 3 → 1, and 1 is the root because parent[1] = 1. With full path compression, find(5) makes 5 point directly to the representative. Therefore, parent[5] becomes 1."
+},
+
+{
+question:"Which combination gives the standard optimized Union-Find implementation?",
+
+options:[
+"Path compression + union by rank/size",
+"BFS + DFS",
+"Binary search + sorting",
+"Dijkstra + Bellman-Ford"
+],
+
+answer:0,
+
+explanation:"The standard highly efficient Union-Find implementation combines path compression with a balancing heuristic such as union by rank or union by size. Path compression flattens trees during find operations, while union by rank/size prevents unnecessarily tall trees during merging."
+},
+
+{
+question:"A graph initially has each of its 6 vertices in a separate set. The following operations are performed: union(0,1), union(2,3), union(1,3), union(4,5). How many disjoint sets remain?",
+
+options:[
+"1",
+"2",
+"3",
+"4"
+],
+
+answer:1,
+
+explanation:"Initially there are six sets. union(0,1) reduces the count to five. union(2,3) reduces it to four. union(1,3) merges the two existing components {0,1} and {2,3}, reducing the count to three. Finally, union(4,5) reduces it to two. The final components are {0,1,2,3} and {4,5}."
+},
+
+{
+question:"An edge (u, v) is being considered for addition to an undirected graph while using DSU for cycle detection. When should the edge be rejected as forming a cycle?",
+
+options:[
+"When find(u) and find(v) return the same representative",
+"When u and v have different representatives",
+"When u and v have different values",
+"When the graph has an even number of vertices"
+],
+
+answer:0,
+
+explanation:"If find(u) and find(v) return the same representative, u and v are already connected by the currently selected edges. Adding another edge between them would create a cycle. Therefore, the edge must be rejected. If their representatives are different, the edge can safely connect two components."
+},
+
+/* =========================================================
+   ADDITIONAL PLACEMENT-LEVEL QUESTIONS
+   ========================================================= */
+
+{
+question:`Consider the following DSU parent array:
+
+<pre>
+Index:   0  1  2  3  4  5  6
+Parent:  0  0  1  2  2  4  5
+</pre>
+
+If full path compression is performed by calling find(6), what will parent[6] become?`,
+
+options:[
+"0",
+"1",
+"2",
+"5"
+],
+
+answer:0,
+
+explanation:"Starting from 6, the parent chain is 6 → 5 → 4 → 2 → 1 → 0. Since parent[0] = 0, node 0 is the representative. Full path compression makes every node encountered on the search path point directly to the representative. Therefore, parent[6] becomes 0."
+},
+
+{
+question:`A DSU contains the following components before processing an edge:
+
+<pre>
+Component 1: {0, 1, 2}
+Component 2: {3, 4}
+Component 3: {5, 6, 7}
+</pre>
+
+Kruskal's algorithm considers the edge (2, 4).
+
+What should the algorithm do?`,
+
+options:[
+"Reject the edge because it creates a cycle",
+"Accept the edge because it connects two different components",
+"Reject the edge because both vertices are not roots",
+"Accept the edge only if vertex 2 is the representative"
+],
+
+answer:1,
+
+explanation:"Vertex 2 belongs to the first component and vertex 4 belongs to the second component. Their representatives are therefore different. Adding the edge (2,4) connects two previously separate components and cannot create a cycle. Kruskal should accept the edge and then union the two components."
+},
+
+{
+question:`Consider the following DSU parent relationships:
+
+<pre>
+parent[0] = 0
+parent[1] = 0
+parent[2] = 1
+parent[3] = 1
+parent[4] = 0
+
+Therefore, the parent links are:
+
+2 → 1 → 0
+
+If find(2) is performed with path compression, what happens to parent[2]?`,
+
+options:[
+"It becomes 1",
+"It becomes 2",
+"It becomes 0",
+"It becomes -1"
+],
+
+answer:2,
+
+explanation:"The path from 2 is 2 → 1 → 0. Node 0 is the representative because parent[0] = 0. Path compression therefore changes parent[2] from 1 to 0, making 2 point directly to the representative. The set membership does not change; only the tree structure becomes flatter."
+},
+
+{
+question:`Suppose a DSU starts with 8 singleton sets. The following operations are performed:
+
+<pre>
+union(0,1)
+union(2,3)
+union(4,5)
+union(6,7)
+union(1,3)
+union(5,7)
+union(3,7)
+</pre>
+
+How many disjoint sets remain after all operations?`,
+
+options:[
+"1",
+"2",
+"3",
+"4"
+],
+
+answer:0,
+
+explanation:"Start with 8 sets. The first four union operations create four components: {0,1}, {2,3}, {4,5}, and {6,7}. union(1,3) merges the first two components, leaving 3 sets. union(5,7) merges the third and fourth components, leaving 2 sets. Finally, union(3,7) connects those two remaining components, leaving exactly 1 set containing all eight elements."
+},
+
+{
+question:`Kruskal's algorithm has already accepted the following edges:
+
+<pre>
+A -- B
+B -- C
+D -- E
+</pre>
+
+The next candidate edge is C -- D.
+
+Which statement is correct?`,
+
+options:[
+"The edge must be rejected because it creates a cycle",
+"The edge must be accepted because C and D belong to different components",
+"The edge must be rejected because C is not a root",
+"The edge can never be considered by Kruskal"
+],
+
+answer:1,
+
+explanation:"The currently accepted edges form two components: {A,B,C} and {D,E}. Vertex C belongs to the first component and D belongs to the second, so their DSU representatives are different. Therefore, adding C -- D connects the two components and does not create a cycle. Kruskal should accept the edge."
+}
+
+];
+
+
+/**************************************************
+GLOBAL VARIABLES
+**************************************************/
+
+let candidateName="";
+let enrollmentNumber="";
+
+let currentQuestion=0;
+
+let answers=[];
+
+let examStarted=false;
+
+let timerInterval=null;
+
+let remainingSeconds=
+CONFIG.durationMinutes*60;
+
+/**************************************************
+INITIALISE ANSWERS
+**************************************************/
+
+function initialiseAnswers(){
+
+answers=[];
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+answers.push(-1);
+
+}
+
+}
+
+/**************************************************
+PAGE REFERENCES
+**************************************************/
+
+const loginPage=
+document.getElementById("loginPage");
+
+const examPage=
+document.getElementById("examPage");
+
+const resultPage=
+document.getElementById("resultPage");
+
+const candidateNameInput=
+document.getElementById("candidateName");
+
+const candidateEnrollmentInput=
+document.getElementById("candidateEnrollment");
+
+const displayName=
+document.getElementById("displayName");
+
+const displayEnrollment=
+document.getElementById("displayEnrollment");
+
+const questionNumber=
+document.getElementById("questionNumber");
+
+const questionText=
+document.getElementById("questionText");
+
+const optionsBox=
+document.getElementById("optionsBox");
+
+const palette=
+document.getElementById("palette");
+
+const timer=
+document.getElementById("timer");
+
+const resultName=
+document.getElementById("resultName");
+
+const resultEnrollment=
+document.getElementById("resultEnrollment");
+
+const correctCount=
+document.getElementById("correctCount");
+
+const wrongCount=
+document.getElementById("wrongCount");
+
+const score=
+document.getElementById("score");
+
+const percentage=
+document.getElementById("percentage");
+
+const timeTaken=
+document.getElementById("timeTaken");
+
+const reviewArea=
+document.getElementById("reviewArea");
+
+/**************************************************
+BUTTON EVENTS
+**************************************************/
+
+document
+.getElementById("startBtn")
+.addEventListener("click",startExam);
+
+document
+.getElementById("prevBtn")
+.addEventListener("click",previousQuestion);
+
+document
+.getElementById("nextBtn")
+.addEventListener("click",nextQuestion);
+
+document
+.getElementById("submitBtn")
+.addEventListener("click",manualSubmit);
+
+/**************************************************
+START EXAM
+**************************************************/
+
+function startExam(){
+
+candidateName=
+candidateNameInput.value.trim();
+
+enrollmentNumber=
+candidateEnrollmentInput.value.trim();
+
+if(candidateName===""){
+
+alert("Please enter Candidate Name.");
+
+return;
+
+}
+
+if(enrollmentNumber===""){
+
+alert("Please enter Enrollment Number.");
+
+return;
+
+}
+
+displayName.textContent=
+candidateName;
+
+displayEnrollment.textContent=
+enrollmentNumber;
+
+initialiseAnswers();
+
+loginPage.classList.remove("active");
+
+examPage.classList.add("active");
+
+examStarted=true;
+
+buildPalette();
+
+loadQuestion();
+
+startTimer();
+
+}
+
+/**************************************************
+TIMER
+**************************************************/
+
+function startTimer(){
+
+updateTimer();
+
+timerInterval=setInterval(function(){
+
+remainingSeconds--;
+
+updateTimer();
+
+if(remainingSeconds<=0){
+
+clearInterval(timerInterval);
+
+submitExam(true);
+
+}
+
+},1000);
+
+}
+
+function updateTimer(){
+
+let min=
+Math.floor(remainingSeconds/60);
+
+let sec=
+remainingSeconds%60;
+
+timer.textContent=
+
+String(min).padStart(2,"0")
+
++
+
+":"
+
++
+
+String(sec).padStart(2,"0");
+
+}
+
+/**************************************************
+LOAD QUESTION
+**************************************************/
+
+function loadQuestion(){
+
+const q=QUESTIONS[currentQuestion];
+
+questionNumber.textContent=
+
+"Question "
+
++
+
+(currentQuestion+1)
+
++
+
+" of "
+
++
+
+QUESTIONS.length;
+
+/* Display question */
+
+let questionHTML=`<div>${q.question}</div>`;
+
+if(q.code){
+
+questionHTML+=`
+
+<pre class="codeBlock">${q.code}</pre>
+
+`;
+
+}
+
+if(q.questionAfterCode){
+
+questionHTML+=`
+
+<div>${q.questionAfterCode}</div>
+
+`;
+
+}
+
+questionText.innerHTML=questionHTML;
+
+let html="";
+
+for(let i=0;i<q.options.length;i++){
+
+const checked=
+
+answers[currentQuestion]===i
+
+?
+
+"checked"
+
+:
+
+"";
+
+html+=`
+
+<label class="option">
+
+<input
+
+type="radio"
+
+name="answer"
+
+value="${i}"
+
+${checked}
+
+onchange="saveAnswer(${i})">
+
+<span class="optionLabel">
+
+<b>${String.fromCharCode(65+i)}.</b>
+
+<span class="optionCode">${q.options[i]}</span>
+
+</span>
+
+</label>
+
+`;
+
+}
+
+optionsBox.innerHTML=html;
+
+updatePalette();
+
+}
+
+/**************************************************
+SAVE ANSWER
+**************************************************/
+
+function saveAnswer(option){
+
+answers[currentQuestion]=option;
+
+updatePalette();
+
+}
+
+/**************************************************
+SAVE CURRENT SELECTION
+**************************************************/
+
+function saveCurrentSelection(){
+
+const selected=
+
+document.querySelector(
+
+'input[name="answer"]:checked'
+
+);
+
+if(selected){
+
+answers[currentQuestion]=
+
+parseInt(selected.value);
+
+}
+
+}
+
+/**************************************************
+NEXT QUESTION
+**************************************************/
+
+function nextQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion<QUESTIONS.length-1){
+
+currentQuestion++;
+
+loadQuestion();
+
+}
+
+}
+
+/**************************************************
+PREVIOUS QUESTION
+**************************************************/
+
+function previousQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion>0){
+
+currentQuestion--;
+
+loadQuestion();
+
+}
+
+}
+
+/**************************************************
+QUESTION PALETTE
+**************************************************/
+
+function buildPalette(){
+
+palette.innerHTML="";
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const btn=document.createElement("button");
+
+btn.textContent=i+1;
+
+btn.className="paletteBtn";
+
+btn.onclick=function(){
+
+saveCurrentSelection();
+
+currentQuestion=i;
+
+loadQuestion();
+
+};
+
+palette.appendChild(btn);
+
+}
+
+updatePalette();
+
+}
+
+/**************************************************
+UPDATE PALETTE
+**************************************************/
+
+function updatePalette(){
+
+const buttons=
+
+document.querySelectorAll(".paletteBtn");
+
+buttons.forEach(function(btn,index){
+
+btn.classList.remove("current");
+
+btn.classList.remove("answered");
+
+if(index===currentQuestion){
+
+btn.classList.add("current");
+
+}
+
+if(answers[index]!==-1){
+
+btn.classList.add("answered");
+
+}
+
+});
+
+}
+
+/**************************************************
+REFRESH / CLOSE WARNING
+**************************************************/
+
+window.addEventListener(
+
+"beforeunload",
+
+function(e){
+
+if(examStarted){
+
+e.preventDefault();
+
+e.returnValue="";
+
+}
+
+}
+
+);
+
+/**************************************************
+MANUAL SUBMIT
+**************************************************/
+
+function manualSubmit(){
+
+saveCurrentSelection();
+
+let unanswered=0;
+
+answers.forEach(function(a){
+
+if(a===-1){
+
+unanswered++;
+
+}
+
+});
+
+let message="Are you sure you want to submit the test?";
+
+if(unanswered>0){
+
+message=
+
+"You have "
+
++
+
+unanswered
+
++
+
+" unanswered question(s).\n\nDo you still want to submit?";
+
+}
+
+if(confirm(message)){
+
+submitExam(false);
+
+}
+
+}
+
+/**************************************************
+SUBMIT EXAM
+**************************************************/
+
+function submitExam(timeUp){
+
+examStarted=false;
+
+clearInterval(timerInterval);
+
+window.onbeforeunload=null;
+
+examPage.classList.remove("active");
+
+resultPage.classList.add("active");
+
+calculateResult();
+
+if(timeUp){
+
+alert(
+
+"Time is over.\n\nYour test has been submitted automatically."
+
+);
+
+}
+
+}
+
+/**************************************************
+RESULT CALCULATION
+**************************************************/
+
+function calculateResult(){
+
+resultName.textContent=candidateName;
+
+resultEnrollment.textContent=enrollmentNumber;
+
+reviewArea.innerHTML="";
+
+let correct=0;
+
+let wrong=0;
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const q=QUESTIONS[i];
+
+if(answers[i]===q.answer){
+
+correct++;
+
+}
+
+else{
+
+wrong++;
+
+const yourAnswer=
+
+answers[i]===-1
+
+?
+
+"Not Answered"
+
+:
+
+String.fromCharCode(65+answers[i]);
+
+const correctAnswer=
+
+String.fromCharCode(65+q.answer);
+
+reviewArea.innerHTML+=`
+
+<div class="review">
+
+
+<b>Question ${i+1}</b>
+
+<br><br>
+
+${q.question}
+
+${q.code ? `
+<br><br>
+<pre class="optionCode">${q.code}</pre>
+` : ""}
+
+${q.questionAfterCode ? `
+<br><br>
+${q.questionAfterCode}
+` : ""}
+
+<br><br>
+
+<b>Your Answer :</b>
+
+${yourAnswer}
+
+<br>
+
+<b>Correct Answer :</b>
+
+${correctAnswer}
+
+<br><br>
+
+<b>Explanation :</b>
+
+<div class="reviewExplanation">
+
+${q.explanation || "Explanation not available."}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+}
+
+correctCount.textContent=correct;
+
+wrongCount.textContent=wrong;
+
+score.textContent=
+
+correct
+
++
+
+" / "
+
++
+
+QUESTIONS.length;
+
+percentage.textContent=
+
+(
+
+(correct/QUESTIONS.length)
+
+*100
+
+).toFixed(2)
+
++
+
+"%";
+
+const usedSeconds=
+
+CONFIG.durationMinutes*60
+
+-
+
+remainingSeconds;
+
+const minutes=
+
+Math.floor(usedSeconds/60);
+
+const seconds=
+
+usedSeconds%60;
+
+timeTaken.textContent=
+
+minutes
+
++
+
+" min "
+
++
+
+seconds
+
++
+
+" sec";
+
+}
+
+/**************************************************
+END OF ENGINE
+**************************************************/
+
+</script>
+
+</body>
+
+</html>
+
