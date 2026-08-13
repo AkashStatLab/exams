@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DSA - Array Pointers: Two Pointers Optimization and Sliding Window Algorithms</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+
+background:#edf2f7;
+
+padding:20px;
+
+}
+
+.container{
+
+max-width:1300px;
+
+margin:auto;
+
+background:white;
+
+border-radius:10px;
+
+box-shadow:0 0 12px rgba(0,0,0,.15);
+
+padding:20px;
+
+}
+
+.page{
+
+display:none;
+
+}
+
+.page.active{
+
+display:block;
+
+}
+
+h1{
+
+text-align:center;
+
+color:#0d6efd;
+
+margin-bottom:20px;
+
+}
+
+h2{
+
+margin-bottom:15px;
+
+color:#333;
+
+}
+
+label{
+
+font-weight:bold;
+
+display:block;
+
+margin-top:12px;
+
+}
+
+input[type=text]{
+
+width:100%;
+
+padding:12px;
+
+font-size:16px;
+
+margin-top:5px;
+
+margin-bottom:10px;
+
+}
+
+button{
+
+background:#0d6efd;
+
+color:white;
+
+border:none;
+
+padding:10px 22px;
+
+font-size:15px;
+
+border-radius:5px;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#0a58ca;
+
+}
+
+ul{
+
+margin-left:20px;
+
+margin-top:10px;
+
+line-height:1.8;
+
+}
+
+.examLayout{
+
+display:grid;
+
+grid-template-columns:4fr 1fr;
+
+gap:20px;
+
+margin-top:20px;
+
+}
+
+.leftPanel{
+
+background:white;
+
+}
+
+.rightPanel{
+
+background:#f8f9fa;
+
+padding:15px;
+
+border-radius:8px;
+
+border:1px solid #ddd;
+
+height:fit-content;
+
+position:sticky;
+
+top:20px;
+
+}
+
+.topBar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:15px;
+
+background:#eef5ff;
+
+border-radius:8px;
+
+margin-bottom:20px;
+
+}
+
+#timer{
+
+font-size:24px;
+
+font-weight:bold;
+
+color:#c00000;
+
+}
+
+#questionNumber{
+
+font-size:20px;
+
+font-weight:bold;
+
+margin-bottom:10px;
+
+}
+
+#questionText{
+
+font-size:20px;
+
+line-height:1.6;
+
+margin-bottom:20px;
+
+}
+
+#questionText ul{
+
+margin:8px 0 18px 20px;
+
+padding-left:18px;
+
+}
+
+#questionText li{
+
+margin-bottom:4px;
+
+}
+
+#questionText p{
+
+margin-top:18px;
+
+}
+
+
+#questionText pre{
+
+background:#f5f5f5;
+
+border:1px solid #ddd;
+
+border-radius:6px;
+
+padding:12px;
+
+margin:12px 0;
+
+font-family:"Courier New",Consolas,monospace;
+
+font-size:14px;
+
+line-height:1.5;
+
+white-space:pre-wrap;
+
+text-align:left;
+
+overflow-x:auto;
+
+}
+
+
+
+.codeBlock{
+
+background:#f7f7f7;
+
+border:1px solid #d8d8d8;
+
+border-radius:6px;
+
+padding:15px;
+
+margin:15px 0;
+
+font-family:"Courier New",Consolas,monospace;
+
+font-size:15px;
+
+line-height:1.6;
+
+white-space:pre-wrap;
+
+overflow-x:auto;
+
+text-align:left;
+
+}
+
+
+
+
+
+.option{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:12px;
+
+padding:12px;
+
+border:1px solid #d8d8d8;
+
+border-radius:6px;
+
+margin-bottom:10px;
+
+cursor:pointer;
+
+}
+
+.option:hover{
+
+background:#eef6ff;
+
+}
+
+.option input{
+
+width:18px;
+
+height:18px;
+
+}
+
+.optionLabel{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:10px;
+
+flex:1;
+
+}
+
+.optionCode{
+
+margin:0;
+
+font-family:"Courier New",Consolas,monospace;
+
+font-size:14px;
+
+line-height:1.5;
+
+white-space:pre-wrap;
+
+text-align:left;
+
+}
+
+.navigation{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:25px;
+
+}
+
+#palette{
+
+display:grid;
+
+grid-template-columns:repeat(5,1fr);
+
+gap:8px;
+
+margin-top:15px;
+
+}
+
+.paletteBtn{
+
+padding:10px;
+
+border:none;
+
+background:#d8d8d8;
+
+border-radius:5px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+.paletteBtn.current{
+
+background:#0d6efd;
+
+color:white;
+
+}
+
+.paletteBtn.answered{
+
+background:#198754;
+
+color:white;
+
+}
+
+.reviewExplanation{
+
+margin-top:8px;
+
+padding:10px;
+
+background:#f8f9fa;
+
+border-left:4px solid #0d6efd;
+
+line-height:1.6;
+
+}
+
+.resultCard{
+
+background:#f8f8f8;
+
+padding:20px;
+
+border-radius:8px;
+
+line-height:2;
+
+margin-top:20px;
+
+}
+
+.review{
+
+margin-top:20px;
+
+padding:15px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+background:white;
+
+}
+
+hr{
+
+margin:20px 0;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage" class="page active">
+
+<h1>DSA - Array Pointers: Two Pointers Optimization and Sliding Window Algorithms</h1>
+
+<h2>Candidate Details</h2>
+
+<label>Candidate Name</label>
+
+<input
+type="text"
+id="candidateName">
+
+<label>Enrollment Number</label>
+
+<input
+type="text"
+id="candidateEnrollment">
+
+<h2>Instructions</h2>
+
+<ul>
+
+<li>Total Questions : 20</li>
+
+<li>Duration : 40 Minutes</li>
+
+<li>Each Question carries 1 Mark.</li>
+
+<li>No Negative Marking.</li>
+
+<li>Do not refresh or close the browser during the examination.</li>
+
+</ul>
+
+<br>
+
+<button id="startBtn">
+
+Start Test
+
+</button>
+
+</div>
+
+<!-- EXAM PAGE -->
+
+<div id="examPage" class="page">
+
+<div class="topBar">
+
+<div>
+
+<b>Name :</b>
+
+<span id="displayName"></span>
+
+<br>
+
+<b>Enrollment :</b>
+
+<span id="displayEnrollment"></span>
+
+</div>
+
+<div>
+
+Time Left
+
+<div id="timer">
+
+40:00
+
+</div>
+
+</div>
+
+</div>
+
+<div class="examLayout">
+
+<div class="leftPanel">
+
+<div id="questionNumber"></div>
+
+<div id="questionText"></div>
+
+<div id="optionsBox"></div>
+
+<div class="navigation">
+
+<button id="prevBtn">
+
+Previous
+
+</button>
+
+<button id="nextBtn">
+
+Next
+
+</button>
+
+<button id="submitBtn">
+
+Submit Test
+
+</button>
+
+</div>
+
+</div>
+
+<div class="rightPanel">
+
+<h3>
+
+Question Palette
+
+</h3>
+
+<div id="palette">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RESULT PAGE -->
+
+<div id="resultPage" class="page">
+
+<h1>
+
+Test Result
+
+</h1>
+
+<div class="resultCard">
+
+<p>
+
+<b>Name :</b>
+
+<span id="resultName"></span>
+
+</p>
+
+<p>
+
+<b>Enrollment :</b>
+
+<span id="resultEnrollment"></span>
+
+</p>
+
+<hr>
+
+<p>
+
+Correct :
+
+<span id="correctCount"></span>
+
+</p>
+
+<p>
+
+Incorrect :
+
+<span id="wrongCount"></span>
+
+</p>
+
+<p>
+
+Score :
+
+<span id="score"></span>
+
+</p>
+
+<p>
+
+Percentage :
+
+<span id="percentage"></span>
+
+</p>
+
+<p>
+
+Time Taken :
+
+<span id="timeTaken"></span>
+
+</p>
+
+</div>
+
+<h2 style="margin-top:30px;">
+
+Incorrectly Answered Questions
+
+</h2>
+
+<div id="reviewArea">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/**************************************************
+
+CBT ENGINE v3.0
+
+Chunk 2 starts immediately below.
+
+**************************************************/
+
+/**************************************************
+CONFIGURATION
+**************************************************/
+
+const CONFIG = {
+title:"DSA - Array Pointers: Two Pointers Optimization and Sliding Window Algorithms",
+durationMinutes:40,
+marksPerQuestion:1
+};
+
+/**************************************************
+QUESTIONS
+(We'll insert them in Chunks 3 & 4)
+**************************************************/
+
+
+const QUESTIONS = [
+
+{
+question:"A sorted array contains 1, 3, 5, 7, 9, 11. Two pointers are placed at the first and last elements. If their sum is greater than 10, which pointer should be moved to search for a smaller sum?",
+
+options:[
+"Left pointer to the right",
+"Right pointer to the left",
+"Both pointers to the right",
+"Both pointers to the left"
+],
+
+answer:1,
+
+explanation:"When the array is sorted and the current sum is greater than the target, the right pointer is moved one position to the left. This decreases the sum because the value at the right pointer becomes smaller."
+},
+
+{
+question:"Using the two-pointer approach on the sorted array [2, 4, 5, 7, 9, 12], which pair is found first when searching for a pair whose sum is 11?",
+
+options:[
+"2 and 9",
+"4 and 7",
+"5 and 6",
+"2 and 7"
+],
+
+answer:0,
+
+explanation:"The two pointers initially point to 2 and 12, giving a sum of 14. Since this is greater than 11, the right pointer moves left to 9. Now 2 + 9 = 11, so the first pair found is 2 and 9."
+},
+
+{
+question:"What is the main advantage of using two pointers to find a pair with a given sum in a sorted array, compared with checking every possible pair?",
+
+options:[
+"It reduces the time complexity from O(n²) to O(n)",
+"It reduces the space complexity from O(n) to O(1) only",
+"It always works on an unsorted array without modification",
+"It uses binary search for every element"
+],
+
+answer:0,
+
+explanation:"For a sorted array, the two-pointer technique can find a target pair in O(n) time because each pointer moves through the array at most once. Checking every possible pair would require O(n²) time."
+},
+
+{
+question:`Consider the following C code. What will be printed?
+
+<pre>
+int a[] = {1, 2, 3, 4};
+int left = 0, right = 3;
+
+while (left < right) {
+    printf("%d %d ", a[left], a[right]);
+    left++;
+    right--;
+}
+</pre>`,
+
+options:[
+"1 2 3 4",
+"4 3 2 1",
+"1 4 2 3",
+"2 3 4 1"
+],
+
+answer:2,
+
+explanation:"Initially left = 0 and right = 3, so the first pair printed is 1 4. The pointers then become 1 and 2, so the second pair printed is 2 3. Therefore, the output is 1 4 2 3."
+},
+
+{
+question:"An array contains [1, 1, 2, 2, 3, 4, 4]. Using the standard two-pointer technique for a sorted array, what is the number of unique elements after removing duplicates in-place?",
+
+options:[
+"3",
+"4",
+"5",
+"7"
+],
+
+answer:1,
+
+explanation:"The unique elements are 1, 2, 3 and 4. Therefore, after removing duplicates in-place, the number of unique elements is 4."
+},
+
+{
+question:"For the array [2, 1, 5, 1, 3] and window size k = 3, what is the maximum sum of any contiguous subarray of size 3?",
+
+options:[
+"7",
+"8",
+"9",
+"10"
+],
+
+answer:2,
+
+explanation:"The three windows are [2,1,5] with sum 8, [1,5,1] with sum 7, and [5,1,3] with sum 9. Therefore, the maximum sum is 9."
+},
+
+{
+question:"A fixed-size sliding window of size k moves through an array of n elements. If the sum of the current window is maintained by adding the new element and removing the outgoing element, what is the time complexity?",
+
+options:[
+"O(1)",
+"O(log n)",
+"O(n)",
+"O(n²)"
+],
+
+answer:2,
+
+explanation:"Each new window can be calculated from the previous window by adding one entering element and subtracting one leaving element, both O(1) operations. Since there are O(n) windows, the total time complexity is O(n)."
+},
+
+{
+question:"For the array [2, 1, 5, 1, 3, 2] and k = 3, what is the sum of the first window and the second window?",
+
+options:[
+"8 and 7",
+"8 and 6",
+"7 and 9",
+"9 and 6"
+],
+
+answer:0,
+
+explanation:"The first window is [2,1,5], whose sum is 8. The second window is [1,5,1], whose sum is 7. Therefore, the answer is 8 and 7."
+},
+
+{
+question:"A sorted array is [1, 2, 3, 4, 6, 8, 9]. Using two pointers starting from both ends, which pair is found first for target sum 10?",
+
+options:[
+"1 and 9",
+"2 and 8",
+"4 and 6",
+"3 and 7"
+],
+
+answer:0,
+
+explanation:"Start with the first and last elements: 1 + 9 = 10. Since this immediately equals the target, the pair found first is 1 and 9."
+},
+
+{
+question:"For the positive-integer array [2, 3, 1, 2, 4, 3], what is the minimum length of a contiguous subarray whose sum is at least 7?",
+
+options:[
+"2",
+"3",
+"4",
+"5"
+],
+
+answer:0,
+
+explanation:"The subarray [4,3] has sum 7 and length 2. No single element has a value of at least 7, so the minimum possible length is 2."
+},
+
+{
+question:"In the two-pointer technique for a sorted array, if the current pair has a sum smaller than the target, which pointer is generally moved?",
+
+options:[
+"Left pointer to the right",
+"Right pointer to the left",
+"Both pointers toward the center",
+"Neither pointer"
+],
+
+answer:0,
+
+explanation:"Because the array is sorted, moving the left pointer to the right increases the left value and therefore increases the current sum, helping it approach the target."
+},
+
+{
+question:"For the sorted array [1, 2, 3, 4, 6], using two pointers from both ends, what happens when the current sum is greater than the target?",
+
+options:[
+"Move the left pointer right",
+"Move the right pointer left",
+"Move both pointers right",
+"Stop immediately"
+],
+
+answer:1,
+
+explanation:"When the current sum is greater than the target, the right pointer is moved left to select a smaller value and reduce the sum."
+},
+
+{
+question:"Which type of problem is most naturally suited to a fixed-size sliding window?",
+
+options:[
+"Finding the maximum sum of any subarray of size k",
+"Finding the shortest path in a graph",
+"Finding the height of a binary tree",
+"Sorting an arbitrary array"
+],
+
+answer:0,
+
+explanation:"A fixed-size sliding window is particularly useful when examining every contiguous subarray of a specified size k, such as finding the maximum subarray sum of size k."
+},
+
+{
+question:`Consider the following C code. What is the final value of maxSum?
+
+<pre>
+int a[] = {2, 1, 5, 1, 3, 2};
+int k = 3;
+int sum = 0, maxSum = 0;
+
+for (int i = 0; i < k; i++)
+    sum += a[i];
+
+maxSum = sum;
+
+for (int i = k; i < 6; i++) {
+    sum += a[i] - a[i - k];
+
+    if (sum > maxSum)
+        maxSum = sum;
+}
+</pre>`,
+
+options:[
+"6",
+"9",
+"12",
+"15"
+],
+
+answer:1,
+
+explanation:"The initial window [2,1,5] has sum 8. The next windows have sums 7 and 9. Therefore, maxSum is updated to 9 and remains 9 at the end."
+},
+
+{
+question:"For the sorted array [1, 1, 2, 2, 3], which array can be obtained after removing duplicates in-place using the standard slow-fast two-pointer method?",
+
+options:[
+"[1, 2, 3]",
+"[1, 1, 2]",
+"[2, 3, 3]",
+"[1, 2, 2, 3]"
+],
+
+answer:0,
+
+explanation:"The slow-fast two-pointer technique keeps one copy of each distinct element. The resulting unique portion of the array is [1, 2, 3]."
+},
+
+{
+question:"A fixed-size sliding window has size 4. If the current window is [3, 2, 5, 1] and the next element entering the window is 6, which element leaves the window?",
+
+options:[
+"3",
+"2",
+"5",
+"1"
+],
+
+answer:0,
+
+explanation:"When a fixed-size window moves one position to the right, the leftmost element leaves and the new element enters. Therefore, 3 leaves the window and 6 enters."
+},
+
+{
+question:"For the array [1, 2, 3, 4, 5], what is the maximum sum of a contiguous subarray of size 2?",
+
+options:[
+"5",
+"7",
+"9",
+"10"
+],
+
+answer:2,
+
+explanation:"The size-2 windows are [1,2] = 3, [2,3] = 5, [3,4] = 7, and [4,5] = 9. Therefore, the maximum sum is 9."
+},
+
+{
+question:"A variable-size sliding window is commonly used to find the longest subarray satisfying a condition. In a positive-integer array, if the current window sum becomes greater than a given limit, what is the usual next step?",
+
+options:[
+"Expand the window further",
+"Move the left pointer forward to shrink the window",
+"Reset both pointers to zero",
+"Sort the current window"
+],
+
+answer:1,
+
+explanation:"When the window sum exceeds the allowed limit, the window must be reduced. With positive integers, moving the left pointer forward removes elements and decreases the sum."
+},
+
+{
+question:"A sorted array is [1, 2, 4, 5, 7, 10]. Using two pointers to find a pair with target sum 9, which pair will be found first?",
+
+options:[
+"1 and 10",
+"2 and 7",
+"4 and 5",
+"2 and 10"
+],
+
+answer:1,
+
+explanation:"Start with 1 + 10 = 11, which is greater than 9, so the right pointer moves left to 7. Then 1 + 7 = 8, which is smaller than 9, so the left pointer moves right to 2. Now 2 + 7 = 9, so the first pair found is 2 and 7."
+},
+
+{
+question:"For the positive-integer array [2, 3, 1, 2, 4, 3], using a variable-size sliding window, what is the minimum length of a contiguous subarray with sum at least 6?",
+
+options:[
+"1",
+"2",
+"3",
+"4"
+],
+
+answer:1,
+
+explanation:"The subarray [2,4] has sum 6 and length 2. Also, [3,3] has sum 6 and length 2. No single element is at least 6, so the minimum length is 2."
+}
+
+];
+
+
+/**************************************************
+GLOBAL VARIABLES
+**************************************************/
+
+let candidateName="";
+let enrollmentNumber="";
+
+let currentQuestion=0;
+
+let answers=[];
+
+let examStarted=false;
+
+let timerInterval=null;
+
+let remainingSeconds=
+CONFIG.durationMinutes*60;
+
+/**************************************************
+INITIALISE ANSWERS
+**************************************************/
+
+function initialiseAnswers(){
+
+answers=[];
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+answers.push(-1);
+
+}
+
+}
+
+/**************************************************
+PAGE REFERENCES
+**************************************************/
+
+const loginPage=
+document.getElementById("loginPage");
+
+const examPage=
+document.getElementById("examPage");
+
+const resultPage=
+document.getElementById("resultPage");
+
+const candidateNameInput=
+document.getElementById("candidateName");
+
+const candidateEnrollmentInput=
+document.getElementById("candidateEnrollment");
+
+const displayName=
+document.getElementById("displayName");
+
+const displayEnrollment=
+document.getElementById("displayEnrollment");
+
+const questionNumber=
+document.getElementById("questionNumber");
+
+const questionText=
+document.getElementById("questionText");
+
+const optionsBox=
+document.getElementById("optionsBox");
+
+const palette=
+document.getElementById("palette");
+
+const timer=
+document.getElementById("timer");
+
+const resultName=
+document.getElementById("resultName");
+
+const resultEnrollment=
+document.getElementById("resultEnrollment");
+
+const correctCount=
+document.getElementById("correctCount");
+
+const wrongCount=
+document.getElementById("wrongCount");
+
+const score=
+document.getElementById("score");
+
+const percentage=
+document.getElementById("percentage");
+
+const timeTaken=
+document.getElementById("timeTaken");
+
+const reviewArea=
+document.getElementById("reviewArea");
+
+/**************************************************
+BUTTON EVENTS
+**************************************************/
+
+document
+.getElementById("startBtn")
+.addEventListener("click",startExam);
+
+document
+.getElementById("prevBtn")
+.addEventListener("click",previousQuestion);
+
+document
+.getElementById("nextBtn")
+.addEventListener("click",nextQuestion);
+
+document
+.getElementById("submitBtn")
+.addEventListener("click",manualSubmit);
+
+/**************************************************
+START EXAM
+**************************************************/
+
+function startExam(){
+
+candidateName=
+candidateNameInput.value.trim();
+
+enrollmentNumber=
+candidateEnrollmentInput.value.trim();
+
+if(candidateName===""){
+
+alert("Please enter Candidate Name.");
+
+return;
+
+}
+
+if(enrollmentNumber===""){
+
+alert("Please enter Enrollment Number.");
+
+return;
+
+}
+
+displayName.textContent=
+candidateName;
+
+displayEnrollment.textContent=
+enrollmentNumber;
+
+initialiseAnswers();
+
+loginPage.classList.remove("active");
+
+examPage.classList.add("active");
+
+examStarted=true;
+
+buildPalette();
+
+loadQuestion();
+
+startTimer();
+
+}
+
+/**************************************************
+TIMER
+**************************************************/
+
+function startTimer(){
+
+updateTimer();
+
+timerInterval=setInterval(function(){
+
+remainingSeconds--;
+
+updateTimer();
+
+if(remainingSeconds<=0){
+
+clearInterval(timerInterval);
+
+submitExam(true);
+
+}
+
+},1000);
+
+}
+
+function updateTimer(){
+
+let min=
+Math.floor(remainingSeconds/60);
+
+let sec=
+remainingSeconds%60;
+
+timer.textContent=
+
+String(min).padStart(2,"0")
+
++
+
+":"
+
++
+
+String(sec).padStart(2,"0");
+
+}
+
+/**************************************************
+LOAD QUESTION
+**************************************************/
+
+function loadQuestion(){
+
+const q=QUESTIONS[currentQuestion];
+
+questionNumber.textContent=
+
+"Question "
+
++
+
+(currentQuestion+1)
+
++
+
+" of "
+
++
+
+QUESTIONS.length;
+
+/* Display question */
+
+let questionHTML=`<div>${q.question}</div>`;
+
+if(q.code){
+
+questionHTML+=`
+
+<pre class="codeBlock">${q.code}</pre>
+
+`;
+
+}
+
+if(q.questionAfterCode){
+
+questionHTML+=`
+
+<div>${q.questionAfterCode}</div>
+
+`;
+
+}
+
+questionText.innerHTML=questionHTML;
+
+let html="";
+
+for(let i=0;i<q.options.length;i++){
+
+const checked=
+
+answers[currentQuestion]===i
+
+?
+
+"checked"
+
+:
+
+"";
+
+html+=`
+
+<label class="option">
+
+<input
+
+type="radio"
+
+name="answer"
+
+value="${i}"
+
+${checked}
+
+onchange="saveAnswer(${i})">
+
+<span class="optionLabel">
+
+<b>${String.fromCharCode(65+i)}.</b>
+
+<span class="optionCode">${q.options[i]}</span>
+
+</span>
+
+</label>
+
+`;
+
+}
+
+optionsBox.innerHTML=html;
+
+updatePalette();
+
+}
+
+/**************************************************
+SAVE ANSWER
+**************************************************/
+
+function saveAnswer(option){
+
+answers[currentQuestion]=option;
+
+updatePalette();
+
+}
+
+/**************************************************
+SAVE CURRENT SELECTION
+**************************************************/
+
+function saveCurrentSelection(){
+
+const selected=
+
+document.querySelector(
+
+'input[name="answer"]:checked'
+
+);
+
+if(selected){
+
+answers[currentQuestion]=
+
+parseInt(selected.value);
+
+}
+
+}
+
+/**************************************************
+NEXT QUESTION
+**************************************************/
+
+function nextQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion<QUESTIONS.length-1){
+
+currentQuestion++;
+
+loadQuestion();
+
+}
+
+}
+
+/**************************************************
+PREVIOUS QUESTION
+**************************************************/
+
+function previousQuestion(){
+
+saveCurrentSelection();
+
+if(currentQuestion>0){
+
+currentQuestion--;
+
+loadQuestion();
+
+}
+
+}
+
+/**************************************************
+QUESTION PALETTE
+**************************************************/
+
+function buildPalette(){
+
+palette.innerHTML="";
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const btn=document.createElement("button");
+
+btn.textContent=i+1;
+
+btn.className="paletteBtn";
+
+btn.onclick=function(){
+
+saveCurrentSelection();
+
+currentQuestion=i;
+
+loadQuestion();
+
+};
+
+palette.appendChild(btn);
+
+}
+
+updatePalette();
+
+}
+
+/**************************************************
+UPDATE PALETTE
+**************************************************/
+
+function updatePalette(){
+
+const buttons=
+
+document.querySelectorAll(".paletteBtn");
+
+buttons.forEach(function(btn,index){
+
+btn.classList.remove("current");
+
+btn.classList.remove("answered");
+
+if(index===currentQuestion){
+
+btn.classList.add("current");
+
+}
+
+if(answers[index]!==-1){
+
+btn.classList.add("answered");
+
+}
+
+});
+
+}
+
+/**************************************************
+REFRESH / CLOSE WARNING
+**************************************************/
+
+window.addEventListener(
+
+"beforeunload",
+
+function(e){
+
+if(examStarted){
+
+e.preventDefault();
+
+e.returnValue="";
+
+}
+
+}
+
+);
+
+/**************************************************
+MANUAL SUBMIT
+**************************************************/
+
+function manualSubmit(){
+
+saveCurrentSelection();
+
+let unanswered=0;
+
+answers.forEach(function(a){
+
+if(a===-1){
+
+unanswered++;
+
+}
+
+});
+
+let message="Are you sure you want to submit the test?";
+
+if(unanswered>0){
+
+message=
+
+"You have "
+
++
+
+unanswered
+
++
+
+" unanswered question(s).\n\nDo you still want to submit?";
+
+}
+
+if(confirm(message)){
+
+submitExam(false);
+
+}
+
+}
+
+/**************************************************
+SUBMIT EXAM
+**************************************************/
+
+function submitExam(timeUp){
+
+examStarted=false;
+
+clearInterval(timerInterval);
+
+window.onbeforeunload=null;
+
+examPage.classList.remove("active");
+
+resultPage.classList.add("active");
+
+calculateResult();
+
+if(timeUp){
+
+alert(
+
+"Time is over.\n\nYour test has been submitted automatically."
+
+);
+
+}
+
+}
+
+/**************************************************
+RESULT CALCULATION
+**************************************************/
+
+function calculateResult(){
+
+resultName.textContent=candidateName;
+
+resultEnrollment.textContent=enrollmentNumber;
+
+reviewArea.innerHTML="";
+
+let correct=0;
+
+let wrong=0;
+
+for(let i=0;i<QUESTIONS.length;i++){
+
+const q=QUESTIONS[i];
+
+if(answers[i]===q.answer){
+
+correct++;
+
+}
+
+else{
+
+wrong++;
+
+const yourAnswer=
+
+answers[i]===-1
+
+?
+
+"Not Answered"
+
+:
+
+String.fromCharCode(65+answers[i]);
+
+const correctAnswer=
+
+String.fromCharCode(65+q.answer);
+
+reviewArea.innerHTML+=`
+
+<div class="review">
+
+
+<b>Question ${i+1}</b>
+
+<br><br>
+
+${q.question}
+
+${q.code ? `
+<br><br>
+<pre class="optionCode">${q.code}</pre>
+` : ""}
+
+${q.questionAfterCode ? `
+<br><br>
+${q.questionAfterCode}
+` : ""}
+
+<br><br>
+
+<b>Your Answer :</b>
+
+${yourAnswer}
+
+<br>
+
+<b>Correct Answer :</b>
+
+${correctAnswer}
+
+<br><br>
+
+<b>Explanation :</b>
+
+<div class="reviewExplanation">
+
+${q.explanation || "Explanation not available."}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+}
+
+correctCount.textContent=correct;
+
+wrongCount.textContent=wrong;
+
+score.textContent=
+
+correct
+
++
+
+" / "
+
++
+
+QUESTIONS.length;
+
+percentage.textContent=
+
+(
+
+(correct/QUESTIONS.length)
+
+*100
+
+).toFixed(2)
+
++
+
+"%";
+
+const usedSeconds=
+
+CONFIG.durationMinutes*60
+
+-
+
+remainingSeconds;
+
+const minutes=
+
+Math.floor(usedSeconds/60);
+
+const seconds=
+
+usedSeconds%60;
+
+timeTaken.textContent=
+
+minutes
+
++
+
+" min "
+
++
+
+seconds
+
++
+
+" sec";
+
+}
+
+/**************************************************
+END OF ENGINE
+**************************************************/
+
+</script>
+
+</body>
+
+</html>
+
